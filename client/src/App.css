@@ -1,0 +1,215 @@
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+/* generic class */
+.muted {
+  color: #7e7b7b;
+}
+
+.fab {
+  width: 2.5rem;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.fa-twitter {
+  color: #38a1f3
+}
+
+.fa-facebook {
+  color: #3b5998
+}
+
+.fa-instagram {
+  color: #3f729b
+}
+
+.fa-youtube {
+  color: #c4302b
+}
+
+.fa-linkedin {
+  color: #0077b5
+}
+
+/* end */
+
+.fa-bars {
+  display: none;
+  border-radius: 50%;
+  /* border: 1px solid #63b7df; */
+  background: #007bff;
+  color: #e3e3e3;
+  padding: 9px;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out;
+}
+
+.fa-bars:hover {
+  background: #0977ec;
+  color: #333;
+}
+
+.navbar {
+  width: 100%;
+  background: #333;
+  color: #fff;
+  border-bottom: #007bff solid 3px;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+}
+
+.home-content {
+  height: auto;
+}
+
+.rows {
+  display: flex;
+}
+
+.rows-fl {
+  flex-grow: 1;
+}
+
+.rows-fl-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.rows-fl h1 {
+  font-size: 4.5rem;
+}
+
+.rows-fl p {
+  font-size: 1.5rem;
+}
+
+.rows-fr {
+  flex-grow: 2;
+}
+
+.button {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  margin-right: 1rem;
+  cursor: pointer;
+  border: transparent;
+  outline: none;
+  transition: all 0.7s ease-in-out;
+}
+
+.btn-default {
+  background: #e3e3e3;
+}
+
+.btn-default:hover {
+  background: #7e7b7b;
+  color: #fff;
+}
+
+.panel-img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+
+.panel {
+  background: #e3e3e3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  padding: 1rem;
+}
+
+.panel ul {
+  list-style: none;
+}
+
+.panel div:nth-child(3) {
+  margin: auto;
+}
+
+.dash-buttons a:hover {
+  text-decoration: none;
+}
+
+@media (max-width: 968px) {
+  .rows-fl h1 {
+    font-size: 3.5rem;
+  }
+
+  .rows-fl p {
+    font-size: 1rem;
+  }
+
+  .button {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+  }
+}
+
+@media (max-width: 765px) {
+  .fa-bars {
+    display: block;
+  }
+
+  .rows-fl h1 {
+    font-size: 2.5rem;
+  }
+
+  .rows-fl p {
+    font-size: 1rem;
+  }
+
+  .button {
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .rows {
+    display: block;
+  }
+
+  .rows-fl,
+  .rows-btn {
+    text-align: center;
+  }
+
+  .panel {
+    grid-template-columns: 1fr;
+  }
+
+  .sm-hidden {
+    display: none;
+  }
+
+  .panel-img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .short-prof {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .dash-buttons a {
+    display: block;
+    width: 100%;
+  }
+}
