@@ -1,3 +1,7 @@
+import {
+    AUTH_SIGN_UP
+} from "../actions/types";
+
 const initState = {
     token: '',
     isAuthenticated: false,
@@ -6,7 +10,12 @@ const initState = {
 
 export default function (state = initState, action) {
     switch (action.type) {
-        default:
-            return state;
+        case AUTH_SIGN_UP:
+            return {
+                ...state,
+                isAuthenticated: true,
+            }
+            default:
+                return state;
     }
 }
