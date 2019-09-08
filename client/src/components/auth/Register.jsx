@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import Title from '../content/Title';
+import { Alert } from 'reactstrap';
 import { validateEmail, validatePassword } from './validator';
 import { connect } from 'react-redux';
 import { register } from '../../actions/authAction';
+import { clearError } from '../../actions/errorAction';
+import PropTypes from 'prop-types';
 
 class Register extends Component {
   state = {
@@ -13,8 +16,33 @@ class Register extends Component {
     errName: false,
     errEmail: false,
     errPassword: false,
-    errConfPassword: false
+    errConfPassword: false,
+    msg: null
   };
+
+  static propTypes = {
+    isAuthenticated: PropTypes.bool,
+    error: PropTypes.object.isRequired,
+    register: PropTypes.func.isRequired,
+    clearError: PropTypes.func.isRequired
+  };
+
+  componentDidUpdate(prevProps) {
+    const { error } = this.props;
+    if (error !== prevProps.error) {
+      // check for registration fail
+      if (error.id === 'REGISTER_FAIL') {
+        console.log('failed');
+        this.setState({
+          msg: error.msg.msg
+        });
+      } else {
+        this.setState({
+          msg: null
+        });
+      }
+    }
+  }
 
   handleNameError = e => {
     // Handle input name error
@@ -55,10 +83,23 @@ class Register extends Component {
     }
   };
 
+  handleConfPasswordError = e => {
+    // Handle input confirm password error
+    if (e.target.name === 'confirmPassword' && e.target.value.length > 0) {
+      this.setState({
+        errConfPassword: false
+      });
+    } else {
+      this.setState({
+        errConfPassword: true
+      });
+    }
+  };
+
   // handle state values
   handleChange = e => {
     this.setState({
-      [e.target.name]: [e.target.value]
+      [e.target.name]: e.target.value
     });
   };
 
@@ -83,14 +124,15 @@ class Register extends Component {
       });
       return;
     }
-    // if (password !== confirmPassword) {
-    //   this.setState({
-    //     errConfPassword: true
-    //   });
-    //   return;
-    // }
+    if (password !== confirmPassword) {
+      this.setState({
+        errConfPassword: true
+      });
+      return;
+    }
 
     const data = { name, email, password };
+
     this.props.register(data);
   };
 
@@ -102,7 +144,7 @@ class Register extends Component {
           icon='fas fa-user-alt fa-2x'
           subtitle='Create Your Account'
         />
-
+        {this.state.msg ? <Alert color='danger'>{this.state.msg}</Alert> : null}
         <div>
           <form className='form' onSubmit={this.handleSubmit}>
             <input
@@ -117,7 +159,7 @@ class Register extends Component {
               style={{ borderColor: this.state.errName ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
-              <p>{this.state.errName ? 'Enter your username' : ''}</p>
+              <p>{this.state.errName ? 'Enter a valid username' : ''}</p>
             </small>
             <input
               type='text'
@@ -160,7 +202,10 @@ class Register extends Component {
               className='form-control'
               placeholder='Confirm Password'
               name='confirmPassword'
-              onChange={this.handleChange}
+              onChange={e => {
+                this.handleChange(e);
+                this.handleConfPasswordError(e);
+              }}
               style={{ borderColor: this.state.errConfPassword ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
@@ -180,7 +225,14 @@ class Register extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+    error: state.error
+  };
+};
+
 export default connect(
-  null,
-  { register }
+  mapStateToProps,
+  { register, clearError }
 )(Register);
