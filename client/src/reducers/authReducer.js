@@ -45,7 +45,7 @@ export default function (state = initState, action) {
         case LOG_OUT:
             localStorage.removeItem('token');
             return {
-                token: null,
+                token: '',
                     isAuthenticated: false,
                     error: '',
                     user: null,

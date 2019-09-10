@@ -5,7 +5,8 @@ import {
     AUTH_SIGN_IN,
     USER_LOADED,
     USER_LOADING,
-    LOG_OUT
+    LOG_OUT,
+    DASHBOARD_USER
 } from './types'
 import {
     returnError
@@ -21,6 +22,10 @@ export const loadUser = () => async (dispatch, getState) => {
 
         dispatch({
             type: USER_LOADED,
+            payload: res.data
+        })
+        dispatch({
+            type: DASHBOARD_USER,
             payload: res.data
         })
 

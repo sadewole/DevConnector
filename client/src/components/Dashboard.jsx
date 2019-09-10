@@ -3,11 +3,28 @@ import Title from './content/Title';
 import { Link } from 'react-router-dom';
 import Experience from './content/ExperiencePanel';
 import Education from './content/EducationPanel';
+import { loadUser } from '../actions/authAction';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class Dashboard extends Component {
+class Dashboard extends Component {
   state = {
-    userName: 'John Doe'
+    userName: ''
   };
+
+  static propTypes = {
+    dash: PropTypes.object
+  };
+
+  // componentDidMount() {
+  //   this.props.loadUser();
+  // }
+
+  componentDidUpdate() {
+    this.setState({
+      userName: this.props.dash.userName
+    });
+  }
 
   deleteAccount = () => {
     console.log('Account Delete');
@@ -45,3 +62,14 @@ export default class Dashboard extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    dash: state.dash
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { loadUser }
+)(Dashboard);
