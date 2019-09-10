@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Input, FormGroup, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Title from '../content/Title';
+import { validateInputName } from '../auth/validator';
 
 export default class EducationPost extends Component {
   state = {
@@ -11,7 +12,8 @@ export default class EducationPost extends Component {
     startDate: '',
     endDate: '',
     isCurrent: false,
-    description: ''
+    description: '',
+    error: {}
   };
 
   toggleCurrent = () => {
@@ -26,14 +28,29 @@ export default class EducationPost extends Component {
     });
   };
 
-  onChange = e => {
+  handleChange = e => {
     this.setState({
-      [e.target.name]: [e.target.value]
+      [e.target.name]: e.target.value
     });
   };
 
-  handleSubmit = () => {
-    console.log('submit form ---');
+  handleSubmit = e => {
+    e.preventDefault();
+    const {
+      school,
+      degree,
+      study,
+      startDate,
+      endDate,
+      isCurrent,
+      description
+    } = this.state;
+
+    if (validateInputName(school)) {
+      return (this.setState({
+        error['school']: true
+      })
+    }
   };
 
   render() {
@@ -54,30 +71,61 @@ export default class EducationPost extends Component {
               className='mb-2'
               placeholder='* School or Bootcamp'
               name='school'
-              onChange={this.onChange}
+              onChange={e => {
+                this.handleChange(e);
+                this.handleNameError(e);
+              }}
+              style={{ borderColor: this.state.error['school'] ? 'red' : '' }}
             />
+            <small className='text-danger mb-4'>
+              <p>
+                {this.state.error['school'] ? 'Field must not be empty' : ''}
+              </p>
+            </small>
             <Input
               type='text'
               placeholder='* Degree or Certificate'
               className='mb-2'
               name='degree'
-              onChange={this.onChange}
+              onChange={e => {
+                this.handleChange(e);
+                this.handleNameError(e);
+              }}
+              style={{ borderColor: this.state.error['degree'] ? 'red' : '' }}
             />
+            <small className='text-danger mb-4'>
+              <p>
+                {this.state.error['degree'] ? 'Field must not be empty' : ''}
+              </p>
+            </small>
             <Input
               type='text'
               name='study'
               className='mb-2'
-              placeholder='Field Of Study'
+              placeholder='* Field Of Study'
               onChange={this.onChange}
             />
             <FormGroup>
-              <Label for='startDate'>From Date</Label>
+              <Label for='startDate'>* From Date</Label>
               <Input
                 type='date'
                 name='startDate'
                 className='mb-2'
-                onChange={this.onChange}
+                onChange={e => {
+                  this.handleChange(e);
+                  this.handleNameError(e);
+                }}
+                style={{
+                  borderColor: this.state.error['startDate'] ? 'red' : ''
+                }}
               />
+              <small className='text-danger mb-4'>
+                <p>
+                  {this.state.error['startDate']
+                    ? 'Field must not be empty'
+                    : ''}
+                </p>
+              </small>
             </FormGroup>
             <FormGroup className={this.state.isCurrent ? 'hide' : 'show'}>
               <Label for='endDate'>To Date</Label>
@@ -101,10 +149,23 @@ export default class EducationPost extends Component {
             <Input
               type='textarea'
               className='my-4'
-              placeholder='Program Description'
+              placeholder='* Program Description'
               name='description'
-              onChange={this.onChange}
+              onChange={e => {
+                this.handleChange(e);
+                this.handleNameError(e);
+              }}
+              style={{
+                borderColor: this.state.error['description'] ? 'red' : ''
+              }}
             />
+            <small className='text-danger mb-4'>
+              <p>
+                {this.state.error['description']
+                  ? 'Field must not be empty'
+                  : ''}
+              </p>
+            </small>
 
             <FormGroup className='my-4'>
               <button className='button btn-primary'>Submit</button>

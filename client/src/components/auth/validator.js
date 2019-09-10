@@ -7,3 +7,9 @@ export const validatePassword = passwordVal => {
     const pas = /^(?=.*?[\w+])(?=(.*[\W+]?))(?!.*\s).{5,}$/;
     return pas.test(passwordVal);
 };
+
+export const validateInputName = inputName => {
+    if (inputName === '' || /^\s/.test(inputName)) {
+        return true
+    }
+}
