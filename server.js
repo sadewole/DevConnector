@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
+const cors = require('cors')
 const db = require('./db')
 
 // connected to database
@@ -9,10 +10,11 @@ db()
 const app = express();
 
 // middlewares
+app.use(cors())
 app.use(logger('dev'))
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: false
 }));
 
 
