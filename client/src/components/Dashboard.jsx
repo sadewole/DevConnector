@@ -13,17 +13,17 @@ class Dashboard extends Component {
   };
 
   static propTypes = {
-    dash: PropTypes.object
+    dash: PropTypes.object,
+    loadUser: PropTypes.func.isRequired
   };
 
-  // componentDidMount() {
-  //   this.props.loadUser();
-  // }
-
-  componentDidUpdate() {
-    this.setState({
-      userName: this.props.dash.userName
-    });
+  async componentDidMount() {
+    await this.props.loadUser();
+    if (this.props.dash.userName.data !== undefined) {
+      this.setState({
+        userName: this.props.dash.userName.data.name
+      });
+    }
   }
 
   deleteAccount = () => {

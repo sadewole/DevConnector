@@ -11,7 +11,7 @@ export default (state = initState, action) => {
         case DASHBOARD_USER:
             return {
                 ...state,
-                userName: action.payload.data.name
+                userName: action.payload
             };
         default:
             return state
