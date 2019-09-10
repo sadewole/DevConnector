@@ -28,11 +28,10 @@ class Register extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error } = this.props;
+    const { error, isAuthenticated } = this.props;
     if (error !== prevProps.error) {
       // check for registration fail
       if (error.id === 'REGISTER_FAIL') {
-        console.log('failed');
         this.setState({
           msg: error.msg.msg
         });
@@ -41,6 +40,11 @@ class Register extends Component {
           msg: null
         });
       }
+    }
+
+    // redirected if no error
+    if (isAuthenticated) {
+      this.props.history.push('/dashboard');
     }
   }
 
@@ -106,6 +110,7 @@ class Register extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { name, email, password, confirmPassword } = this.state;
+
     if (name === '' || /^\s/.test(name)) {
       this.setState({
         errName: true

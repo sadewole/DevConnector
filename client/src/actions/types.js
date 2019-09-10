@@ -1,6 +1,10 @@
+export const USER_LOADED = 'USER_LOADED';
+export const USER_LOADING = 'USER_LOADING';
 export const AUTH_SIGN_UP = 'AUTH_SIGN_UP';
+export const AUTH_SIGN_IN = 'AUTH_SIGN_IN';
 export const AUTH_ERROR = 'AUTH_ERROR'
 export const REGISTER_FAIL = 'REGISTER_FAIL'
 export const LOGIN_FAIL = 'LOGIN_FAIL'
+export const LOG_OUT = 'LOG_OUT'
 export const GET_ERROR = 'GET_ERROR'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
