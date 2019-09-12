@@ -10,5 +10,5 @@ export default combineReducers({
     auth: authReducer,
     error: errorReducer,
     dash: dashboardReducer,
-    educ: educationReducer
+    education: educationReducer
 })

@@ -22,40 +22,36 @@ export const getSingleUserEdu = (id) => async (dispatch, getState) => {
         const res = await axios.get(`/api/v1/user/${id}/edu`, tokenConfig(getState))
         dispatch({
             type: GET_EDUCATION,
-            payload: res.data.data
+            payload: res.data
         })
     } catch (error) {
-
+        dispatch(returnError(error.response.status, error.response.msg))
     }
 }
 
 
-export const postEducation = (data) => async dispatch => {
+export const postEducation = (data) => async (dispatch, getState) => {
     try {
-        const config = {
-            'Content-Type': 'application/json'
-        }
         const body = JSON.stringify(data)
-        const res = await axios.post('/api/v1/edu', body, config)
-
+        const res = await axios.post('/api/v1/edu/', body, tokenConfig(getState))
         dispatch({
             type: ADD_EDUCATION,
-            payload: res.data.data
+            payload: res.data
         })
 
     } catch (error) {
-        dispatch(returnError(error.status, error.msg))
+        dispatch(returnError(error.response.status, error.response.msg, 'ADD_EDUCATION_FAIL'))
     }
 }
 
-export const deleteEducation = id => async dispatch => {
+export const deleteEducation = id => async (dispatch, getState) => {
     try {
-        const res = await axios.delete(`/api/v1/edu/${id}`)
+        const res = await axios.delete(`/api/v1/edu/${id}`, tokenConfig(getState))
         dispatch({
             type: DELETE_EDUCATION,
             payload: res.data
         })
     } catch (error) {
-        dispatch(returnError(error.status, error.msg))
+        dispatch(returnError(error.response.status, error.response.msg))
     }
 }

@@ -19,11 +19,13 @@ class EducationPost extends Component {
     error: {}
   };
 
+  // Props
   static propTypes = {
     postEducation: PropTypes.func.isRequired,
-    educ: PropTypes.object
+    educ: PropTypes.object.isRequired
   };
 
+  // check for current date
   toggleCurrent = () => {
     if (this.state.isCurrent === true) {
       this.setState({
@@ -36,6 +38,7 @@ class EducationPost extends Component {
     });
   };
 
+  // handle state with input
   handleChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -139,9 +142,35 @@ class EducationPost extends Component {
       return;
     }
 
-    // if(thisisCurrent === true){
-    //   isCurrent = new Date
-    // }
+    if (isCurrent === false && endDate === '') {
+      // handle validity
+      this.setState({
+        error: {
+          currentDate: true
+        }
+      });
+      return;
+    }
+    if (endDate !== '' && endDate < startDate) {
+      // handle validity
+      this.setState({
+        error: {
+          endDate: true
+        }
+      });
+      return;
+    }
+
+    if (isCurrent === true && endDate === '') {
+      let currentDate = 'Current';
+      let data = { school, degree, study, startDate, currentDate, description };
+
+      this.props.postEducation(data);
+    } else {
+      let data = { school, degree, study, startDate, endDate, description };
+
+      this.props.postEducation(data);
+    }
   };
 
   render() {
@@ -233,8 +262,19 @@ class EducationPost extends Component {
                 type='date'
                 name='endDate'
                 className='mb-2'
-                onChange={this.onChange}
+                onChange={e => {
+                  this.handleChange(e);
+                  this.handleStartDateError(e);
+                }}
+                style={{
+                  borderColor: this.state.error['endDate'] ? 'red' : ''
+                }}
               />
+              <small className='text-danger mb-4'>
+                <p>
+                  {this.state.error['endDate'] ? "Date doesn't collerate" : ''}
+                </p>
+              </small>
             </FormGroup>
             <FormGroup>
               <input
@@ -244,6 +284,9 @@ class EducationPost extends Component {
                 onChange={this.toggleCurrent}
               />
               Current School
+              <small className='text-danger mb-4'>
+                <p>{this.state.error['currentDate'] ? 'click...' : ''}</p>
+              </small>
             </FormGroup>
 
             <Input
@@ -282,7 +325,7 @@ class EducationPost extends Component {
 
 const mapStateToProps = state => {
   return {
-    educ: state.educ
+    educ: state.education
   };
 };
 
