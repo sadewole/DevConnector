@@ -3,8 +3,11 @@ import { Form, Input, FormGroup, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Title from '../content/Title';
 import { validateInputName } from '../auth/validator';
+import { postEducation } from '../../actions/educationAction';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class EducationPost extends Component {
+class EducationPost extends Component {
   state = {
     school: '',
     degree: '',
@@ -14,6 +17,11 @@ export default class EducationPost extends Component {
     isCurrent: false,
     description: '',
     error: {}
+  };
+
+  static propTypes = {
+    postEducation: PropTypes.func.isRequired,
+    educ: PropTypes.object
   };
 
   toggleCurrent = () => {
@@ -34,9 +42,48 @@ export default class EducationPost extends Component {
     });
   };
 
+  handleAllError = e => {
+    // Handle input error
+    if (e.target.value.length > 0) {
+      this.setState({
+        error: {
+          [e.target.name]: false
+        }
+      });
+    } else {
+      this.setState({
+        error: {
+          [e.target.name]: true
+        }
+      });
+    }
+  };
+
+  handleSchoolError = e => {
+    this.handleAllError(e);
+  };
+
+  handleDegreeError = e => {
+    this.handleAllError(e);
+  };
+
+  handleStudyError = e => {
+    this.handleAllError(e);
+  };
+
+  handleStartDateError = e => {
+    this.handleAllError(e);
+  };
+
+  handleDescriptionError = e => {
+    this.handleAllError(e);
+  };
+
+  // handle form submission
   handleSubmit = e => {
     e.preventDefault();
-    const {
+
+    let {
       school,
       degree,
       study,
@@ -47,10 +94,54 @@ export default class EducationPost extends Component {
     } = this.state;
 
     if (validateInputName(school)) {
-      return (this.setState({
-        error['school']: true
-      })
+      // handle validity
+      this.setState({
+        error: {
+          school: true
+        }
+      });
+      return;
     }
+    if (validateInputName(degree)) {
+      // handle validity
+      this.setState({
+        error: {
+          school: true
+        }
+      });
+      return;
+    }
+    if (validateInputName(study)) {
+      // handle validity
+      this.setState({
+        error: {
+          study: true
+        }
+      });
+      return;
+    }
+    if (validateInputName(startDate)) {
+      // handle validity
+      this.setState({
+        error: {
+          startDate: true
+        }
+      });
+      return;
+    }
+    if (validateInputName(description)) {
+      // handle validity
+      this.setState({
+        error: {
+          description: true
+        }
+      });
+      return;
+    }
+
+    // if(thisisCurrent === true){
+    //   isCurrent = new Date
+    // }
   };
 
   render() {
@@ -73,7 +164,7 @@ export default class EducationPost extends Component {
               name='school'
               onChange={e => {
                 this.handleChange(e);
-                this.handleNameError(e);
+                this.handleSchoolError(e);
               }}
               style={{ borderColor: this.state.error['school'] ? 'red' : '' }}
             />
@@ -89,7 +180,7 @@ export default class EducationPost extends Component {
               name='degree'
               onChange={e => {
                 this.handleChange(e);
-                this.handleNameError(e);
+                this.handleDegreeError(e);
               }}
               style={{ borderColor: this.state.error['degree'] ? 'red' : '' }}
             />
@@ -103,8 +194,17 @@ export default class EducationPost extends Component {
               name='study'
               className='mb-2'
               placeholder='* Field Of Study'
-              onChange={this.onChange}
+              onChange={e => {
+                this.handleChange(e);
+                this.handleStudyError(e);
+              }}
+              style={{ borderColor: this.state.error['study'] ? 'red' : '' }}
             />
+            <small className='text-danger mb-4'>
+              <p>
+                {this.state.error['study'] ? 'Field must not be empty' : ''}
+              </p>
+            </small>
             <FormGroup>
               <Label for='startDate'>* From Date</Label>
               <Input
@@ -113,7 +213,7 @@ export default class EducationPost extends Component {
                 className='mb-2'
                 onChange={e => {
                   this.handleChange(e);
-                  this.handleNameError(e);
+                  this.handleStartDateError(e);
                 }}
                 style={{
                   borderColor: this.state.error['startDate'] ? 'red' : ''
@@ -153,7 +253,7 @@ export default class EducationPost extends Component {
               name='description'
               onChange={e => {
                 this.handleChange(e);
-                this.handleNameError(e);
+                this.handleDescriptionError(e);
               }}
               style={{
                 borderColor: this.state.error['description'] ? 'red' : ''
@@ -179,3 +279,14 @@ export default class EducationPost extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    educ: state.educ
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { postEducation }
+)(EducationPost);

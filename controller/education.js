@@ -30,7 +30,7 @@ module.exports = {
       degree: req.body.degree,
       startDate: req.body.startDate,
       endDate: req.body.endDate,
-      currentDate: req.body.currentDate,
+      currentDate: new Date(),
       description: req.body.description
     };
 
@@ -92,7 +92,7 @@ module.exports = {
     }
   },
 
-  deleteUserEdu: async (req, res, next) => {
+  deleteUseEdu: async (req, res, next) => {
     const {
       id
     } = req.params;
@@ -132,7 +132,7 @@ module.exports = {
       if (!Edu || Edu.length < 1)
         return res.status(404).json({
           msg: 'No record found'
-        });
+        });\
 
       res.status(200).json({
         type: 'GET',
