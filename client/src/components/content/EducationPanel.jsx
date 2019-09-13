@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
 import { connect } from 'react-redux';
-import { getSingleUserEdu } from '../../actions/educationAction';
+import {
+  getSingleUserEdu,
+  deleteEducation
+} from '../../actions/educationAction';
 import { loadUser } from '../../actions/authAction';
 import PropTypes from 'prop-types';
 
 class EducationPanel extends Component {
-  state = {
-    userEduDetails: [],
-    msg: ''
-  };
-
   static propTypes = {
-    edu: PropTypes.object.isRequired,
+    educ: PropTypes.object.isRequired,
     getSingleUserEdu: PropTypes.func.isRequired,
     loadUser: PropTypes.func.isRequired,
-    user: PropTypes.object
+    user: PropTypes.object,
+    deleteEducation: PropTypes.func.isRequired
   };
 
   async componentDidMount() {
@@ -23,23 +22,14 @@ class EducationPanel extends Component {
     if (this.props.user && this.props.user !== null) {
       await this.props.getSingleUserEdu(this.props.user.data._id);
     }
-    if (this.props.edu.count > 0) {
-      this.setState({
-        userEduDetails: this.props.edu.data
-      });
-    } else {
-      await this.setState({
-        msg: this.props.edu.msg
-      });
-    }
   }
 
-  deleteEduDetails = () => {
-    console.log('Delete Education details');
+  deleteEduDetails = id => {
+    this.props.deleteEducation(id);
   };
 
   render() {
-    const eduDetails = this.state.userEduDetails.map(i => {
+    const eduDetails = this.props.educ.edu.map(i => {
       return (
         <tr key={i._id} className='text-capitalize'>
           <td>{i.school}</td>
@@ -50,7 +40,7 @@ class EducationPanel extends Component {
           <td>
             <button
               className='button btn-danger'
-              onClick={this.deleteEduDetails}
+              onClick={() => this.deleteEduDetails(i._id)}
             >
               Delete
             </button>
@@ -81,11 +71,11 @@ class EducationPanel extends Component {
 const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    edu: state.education.edu
+    educ: state.education
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getSingleUserEdu, loadUser }
+  { getSingleUserEdu, loadUser, deleteEducation }
 )(EducationPanel);

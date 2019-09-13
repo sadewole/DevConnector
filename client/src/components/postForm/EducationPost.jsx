@@ -121,6 +121,7 @@ class EducationPost extends Component {
       });
       return;
     }
+    
     if (validateInputName(degree)) {
       // handle validity
       this.setState({

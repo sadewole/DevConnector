@@ -26,7 +26,7 @@ export const getSingleUserEdu = (xd) => async (dispatch, getState) => {
             payload: res.data
         })
     } catch (error) {
-        dispatch(returnError(error.response.status, error.response.msg, 'GET_EDUCATION_FAIL'))
+        dispatch(returnError(error.response.status, error.response.data, 'GET_EDUCATION_FAIL'))
     }
 }
 
@@ -41,7 +41,7 @@ export const postEducation = (data) => async (dispatch, getState) => {
         })
 
     } catch (error) {
-        dispatch(returnError(error.response.status, error.response.msg, 'ADD_EDUCATION_FAIL'))
+        dispatch(returnError(error.response.status, error.response.data, 'ADD_EDUCATION_FAIL'))
     }
 }
 
@@ -50,9 +50,9 @@ export const deleteEducation = id => async (dispatch, getState) => {
         const res = await axios.delete(`/api/v1/edu/${id}`, tokenConfig(getState))
         dispatch({
             type: DELETE_EDUCATION,
-            payload: res.data
+            payload: id
         })
     } catch (error) {
-        dispatch(returnError(error.response.status, error.response.msg))
+        dispatch(returnError(error.response.status, error.response.data, 'DELETE_EDUCATION_FAIL'))
     }
 }

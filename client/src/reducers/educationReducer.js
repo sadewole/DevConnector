@@ -21,7 +21,8 @@ export default (state = initState, action) => {
         case GET_EDUCATION:
             return {
                 ...state,
-                edu: action.payload,
+                edu: action.payload.data,
+                    msg: action.payload.msg,
                     isLoading: false
             };
         case ADD_EDUCATION:
