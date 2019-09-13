@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { Form, Input, FormGroup, Label } from 'reactstrap';
+import {
+  Form,
+  Input,
+  FormGroup,
+  Label,
+  Modal,
+  Button,
+  ModalBody
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Title from '../content/Title';
 import { validateInputName } from '../auth/validator';
@@ -16,13 +24,21 @@ class EducationPost extends Component {
     endDate: '',
     isCurrent: false,
     description: '',
-    error: {}
+    error: {},
+    modal: false
   };
 
   // Props
   static propTypes = {
     postEducation: PropTypes.func.isRequired,
     educ: PropTypes.object.isRequired
+  };
+
+  // toggle for modal
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
   };
 
   // check for current date
@@ -109,7 +125,7 @@ class EducationPost extends Component {
       // handle validity
       this.setState({
         error: {
-          school: true
+          degree: true
         }
       });
       return;
@@ -171,11 +187,23 @@ class EducationPost extends Component {
 
       this.props.postEducation(data);
     }
+
+    this.toggleModal();
   };
 
   render() {
     return (
       <div className='container-fluid mt-5 p-5'>
+        <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+          <ModalBody>
+            <h3 className=''>{this.props.educ.msg}</h3>
+            <Link to='/dashboard'>
+              <Button color='danger' className='float-right'>
+                OK
+              </Button>
+            </Link>
+          </ModalBody>
+        </Modal>
         <Title
           title='Add Your Education'
           icon='fas fa-graduation-cap'
@@ -285,7 +313,11 @@ class EducationPost extends Component {
               />
               Current School
               <small className='text-danger mb-4'>
-                <p>{this.state.error['currentDate'] ? 'click...' : ''}</p>
+                <p>
+                  {this.state.error['currentDate']
+                    ? 'Please, click if this your current school'
+                    : ''}
+                </p>
               </small>
             </FormGroup>
 

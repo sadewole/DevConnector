@@ -7,11 +7,12 @@ import {
 
 const initState = {
     edu: [],
+    msg: '',
     isLoading: false
 }
 
 export default (state = initState, action) => {
-    switch (action.payload) {
+    switch (action.type) {
         case EDUCATION_LOADING:
             return {
                 ...state,
@@ -26,7 +27,8 @@ export default (state = initState, action) => {
         case ADD_EDUCATION:
             return {
                 ...state,
-                edu: [...state.edu, action.payload]
+                edu: [...state.edu, action.payload.data],
+                    msg: action.payload.msg
             };
         case DELETE_EDUCATION:
             return {

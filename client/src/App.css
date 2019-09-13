@@ -4,6 +4,10 @@
 }
 
 /* generic class */
+.float-right {
+  float: right
+}
+
 .muted {
   color: #7e7b7b;
 }
