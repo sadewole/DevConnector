@@ -1,30 +1,51 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
+import { connect } from 'react-redux';
+import { getSingleUserEdu } from '../../actions/educationAction';
+import { loadUser } from '../../actions/authAction';
+import PropTypes from 'prop-types';
 
-export default class EducationPanel extends Component {
+class EducationPanel extends Component {
   state = {
-    userEduDetails: [
-      {
-        school: 'University of washington',
-        degree: 'masters',
-        startYear: 'sep 1993',
-        endYear: 'june 1999'
-      }
-    ]
+    userEduDetails: [],
+    msg: ''
   };
+
+  static propTypes = {
+    edu: PropTypes.object.isRequired,
+    getSingleUserEdu: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired,
+    user: PropTypes.object
+  };
+
+  async componentDidMount() {
+    await this.props.loadUser();
+    if (this.props.user && this.props.user !== null) {
+      await this.props.getSingleUserEdu(this.props.user.data._id);
+    }
+    if (this.props.edu.count > 0) {
+      this.setState({
+        userEduDetails: this.props.edu.data
+      });
+    } else {
+      await this.setState({
+        msg: this.props.edu.msg
+      });
+    }
+  }
 
   deleteEduDetails = () => {
     console.log('Delete Education details');
   };
 
   render() {
-    const eduDetails = this.state.userEduDetails.map((i, k) => {
+    const eduDetails = this.state.userEduDetails.map(i => {
       return (
-        <tr key={k} className='text-capitalize'>
+        <tr key={i._id} className='text-capitalize'>
           <td>{i.school}</td>
           <td className='sm-hidden'>{i.degree}</td>
           <td className='sm-hidden'>
-            {i.startYear} - {i.endYear}
+            {i.startDate} - {i.endDate ? i.endDate : i.currentDate}
           </td>
           <td>
             <button
@@ -56,3 +77,15 @@ export default class EducationPanel extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    edu: state.education.edu
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getSingleUserEdu, loadUser }
+)(EducationPanel);

@@ -194,6 +194,7 @@ class EducationPost extends Component {
   render() {
     return (
       <div className='container-fluid mt-5 p-5'>
+        {/* success modal */}
         <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
           <ModalBody>
             <h3 className=''>{this.props.educ.msg}</h3>
@@ -204,6 +205,7 @@ class EducationPost extends Component {
             </Link>
           </ModalBody>
         </Modal>
+        {/* modal end */}
         <Title
           title='Add Your Education'
           icon='fas fa-graduation-cap'

@@ -13,19 +13,20 @@ import {
 } from './authAction'
 
 
-export const getSingleUserEdu = (id) => async (dispatch, getState) => {
+
+export const getSingleUserEdu = (xd) => async (dispatch, getState) => {
     try {
         dispatch({
             type: EDUCATION_LOADING
         })
 
-        const res = await axios.get(`/api/v1/user/${id}/edu`, tokenConfig(getState))
+        const res = await axios.get(`/api/v1/user/${xd}/edu`, tokenConfig(getState))
         dispatch({
             type: GET_EDUCATION,
             payload: res.data
         })
     } catch (error) {
-        dispatch(returnError(error.response.status, error.response.msg))
+        dispatch(returnError(error.response.status, error.response.msg, 'GET_EDUCATION_FAIL'))
     }
 }
 
