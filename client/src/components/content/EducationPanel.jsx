@@ -35,7 +35,10 @@ class EducationPanel extends Component {
           <td>{i.school}</td>
           <td className='sm-hidden'>{i.degree}</td>
           <td className='sm-hidden'>
-            {i.startDate} - {i.endDate ? i.endDate : i.currentDate}
+            {new Date(i.startDate).toDateString().slice(4, 15)} -{' '}
+            {i.endDate
+              ? new Date(i.endDate).toDateString().slice(4, 15)
+              : i.currentDate}
           </td>
           <td>
             <button

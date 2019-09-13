@@ -94,6 +94,10 @@ class EducationPost extends Component {
     this.handleAllError(e);
   };
 
+  handleEndDateError = e => {
+    this.handleAllError(e);
+  };
+
   handleDescriptionError = e => {
     this.handleAllError(e);
   };
@@ -121,7 +125,7 @@ class EducationPost extends Component {
       });
       return;
     }
-    
+
     if (validateInputName(degree)) {
       // handle validity
       this.setState({
@@ -295,7 +299,7 @@ class EducationPost extends Component {
                 className='mb-2'
                 onChange={e => {
                   this.handleChange(e);
-                  this.handleStartDateError(e);
+                  this.handleEndDateError(e);
                 }}
                 style={{
                   borderColor: this.state.error['endDate'] ? 'red' : ''

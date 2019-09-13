@@ -1,41 +1,49 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
+import { connect } from 'react-redux';
+import {
+  getSingleUserExp,
+  deleteExperience
+} from '../../actions/experienceAction';
+import { loadUser } from '../../actions/authAction';
+import PropTypes from 'prop-types';
 
-export default class ExperiencePanel extends Component {
-  state = {
-    userExpDetail: [
-      {
-        company: 'Microsoft',
-        title: 'Senior Developer',
-        startYear: 'Oct 2011',
-        endYear: 'Current'
-      },
-      {
-        company: 'Sun Microsystems',
-        title: 'Senior Developer',
-        startYear: 'Oct 2004',
-        endYear: 'Nov 2010'
-      }
-    ]
+class ExperiencePanel extends Component {
+  static propTypes = {
+    exper: PropTypes.object.isRequired,
+    getSingleUserExp: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired,
+    user: PropTypes.object,
+    deleteExperience: PropTypes.func.isRequired
   };
 
-  deleteExpDetails = () => {
-    console.log('Delete Experience');
+  async componentDidMount() {
+    await this.props.loadUser();
+    if (this.props.user && this.props.user !== null) {
+      await this.props.getSingleUserExp(this.props.user.data._id);
+    }
+  }
+
+  deleteExpDetails = id => {
+    this.props.deleteExperience(id);
   };
 
   render() {
-    const expDetails = this.state.userExpDetail.map((i, k) => {
+    const expDetails = this.props.exper.exp.map(i => {
       return (
-        <tr key={k} className='text-capitaiize'>
+        <tr key={i._id} className='text-capitaiize'>
           <td>{i.company}</td>
-          <td className='sm-hidden'>{i.title}</td>
+          <td className='sm-hidden'>{i.job}</td>
           <td className='sm-hidden'>
-            {i.startYear} - {i.endYear}
+            {new Date(i.startDate).toDateString().slice(4, 15)} -{' '}
+            {i.endDate
+              ? new Date(i.endDate).toDateString().slice(4, 15)
+              : i.currentDate}
           </td>
           <td>
             <button
               className='button btn-danger'
-              onClick={this.deleteExpDetails}
+              onClick={() => this.deleteExpDetails(i._id)}
             >
               Delete
             </button>
@@ -63,3 +71,15 @@ export default class ExperiencePanel extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    exper: state.experience
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getSingleUserExp, deleteExperience, loadUser }
+)(ExperiencePanel);
