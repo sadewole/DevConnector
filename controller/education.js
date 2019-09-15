@@ -22,6 +22,7 @@ module.exports = {
       });
     }
   },
+
   postUserEdu: async (req, res, next) => {
     const edu = {
       user_id: req.user.id,

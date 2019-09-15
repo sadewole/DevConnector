@@ -14,7 +14,9 @@ import SignIn from './components/auth/SignIn';
 import ProfilePost from './components/postForm/ProfilePost';
 import EducationPost from './components/postForm/EducationPost';
 import ExperiencePost from './components/postForm/ExperiencePost';
+import DefaultPage from './components/DefaultPage';
 // import ProfilePost from './components/postForm/ProfilePost';
+import authGuard from './HOC/authGuard';
 import { loadUser } from './actions/authAction';
 import store from './store';
 
@@ -30,14 +32,15 @@ class App extends Component {
         <AppNavbar />
         <Switch>
           <Route exact path='/' component={Home} />{' '}
-          <Route path='/dashboard' component={Dashboard} />{' '}
+          <Route path='/dashboard' component={authGuard(Dashboard)} />{' '}
           <Route path='/developers' component={Developers} />{' '}
-          <Route path='/posts' component={Posts} />{' '}
+          <Route path='/posts' component={authGuard(Posts)} />{' '}
           <Route path='/register' component={Register} />{' '}
           <Route path='/signin' component={SignIn} />{' '}
-          <Route path='/addProfile' component={ProfilePost} />{' '}
-          <Route path='/addEducation' component={EducationPost} />{' '}
-          <Route path='/addExperience' component={ExperiencePost} />{' '}
+          <Route path='/addProfile' component={authGuard(ProfilePost)} />{' '}
+          <Route path='/addEducation' component={authGuard(EducationPost)} />{' '}
+          <Route path='/addExperience' component={authGuard(ExperiencePost)} />{' '}
+          <Route path='/:id' component={DefaultPage} />
         </Switch>{' '}
       </Router>
     );

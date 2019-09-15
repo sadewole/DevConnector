@@ -1,35 +1,49 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
+import { connect } from 'react-redux';
+import {
+  getSingleUserEdu,
+  deleteEducation
+} from '../../actions/educationAction';
+import { loadUser } from '../../actions/authAction';
+import PropTypes from 'prop-types';
 
-export default class EducationPanel extends Component {
-  state = {
-    userEduDetails: [
-      {
-        school: 'University of washington',
-        degree: 'masters',
-        startYear: 'sep 1993',
-        endYear: 'june 1999'
-      }
-    ]
+class EducationPanel extends Component {
+  static propTypes = {
+    educ: PropTypes.object.isRequired,
+    getSingleUserEdu: PropTypes.func.isRequired,
+    loadUser: PropTypes.func.isRequired,
+    user: PropTypes.object,
+    deleteEducation: PropTypes.func.isRequired
   };
 
-  deleteEduDetails = () => {
-    console.log('Delete Education details');
+  async componentDidMount() {
+    await this.props.loadUser();
+    if (this.props.user && this.props.user !== null) {
+      await this.props.getSingleUserEdu(this.props.user.data._id);
+    }
+  }
+
+  deleteEduDetails = id => {
+    this.props.deleteEducation(id);
   };
 
   render() {
-    const eduDetails = this.state.userEduDetails.map((i, k) => {
+    const eduDetails = this.props.educ.edu.map(i => {
       return (
-        <tr key={k} className='text-capitalize'>
+        <tr key={i._id} className='text-capitalize'>
           <td>{i.school}</td>
           <td className='sm-hidden'>{i.degree}</td>
           <td className='sm-hidden'>
-            {i.startYear} - {i.endYear}
+            {new Date(i.startDate).toDateString().slice(4, 15)} -{' '}
+            {i.endDate
+              ? new Date(i.endDate).toDateString().slice(4, 15)
+              : i.currentDate}
           </td>
           <td>
             <button
               className='button btn-danger'
-              onClick={this.deleteEduDetails}
+              onClick={() => this.deleteEduDetails(i._id)}
             >
               Delete
             </button>
@@ -56,3 +70,15 @@ export default class EducationPanel extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    educ: state.education
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getSingleUserEdu, loadUser, deleteEducation }
+)(EducationPanel);
