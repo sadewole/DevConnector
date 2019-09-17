@@ -13,3 +13,9 @@ export const validateInputName = inputName => {
         return true
     }
 }
+
+export const validateLink = linkVal => {
+    const reg = /(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}(\.[a-z]{2,6}|:[0-9]{3,4})\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)/
+    return reg.test(linkVal)
+
+}

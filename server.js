@@ -23,6 +23,7 @@ app.use('/api/v1', require('./routes/api/user'))
 app.use('/api/v1', require('./routes/api/education'))
 app.use('/api/v1', require('./routes/api/experience'))
 app.use('/api/v1', require('./routes/api/profile'))
+// app.use('/api/v1', require('./routes/api/postFeed'))
 
 
 
