@@ -58,33 +58,37 @@ export default class ProfilePost extends Component {
     }
   };
 
+  handleURLError = e => {
+    // handle URL Error
+    if (!validateLink(e.target.value) && e.target.value.length > 0) {
+      this.setState({
+        error: {
+          [e.target.name]: true
+        }
+      });
+    } else {
+      this.setState({
+        error: {
+          [e.target.name]: false
+        }
+      });
+    }
+  };
+
   handleStatusError = e => this.handleAllError(e);
   handleLocationError = e => this.handleAllError(e);
   handleSkillsError = e => this.handleAllError(e);
   handleBioError = e => this.handleAllError(e);
 
-  handleTwitterUrl = e => {
-    const { twitter } = this.state;
-    if (!validateLink(twitter)) {
-      // handle validity
-      // this.setState({
-      //   error: {
-      //     twitter: true
-      //   }
-      // });
-      console.log('invalid address');
-
-      console.log(this.state.error['twitter']);
-    } else {
-      console.log('valid address');
-    }
-
-    // this.handleAllError(e);
-  };
+  handleTwitterUrl = e => this.handleURLError(e);
+  handleFacebookUrl = e => this.handleURLError(e);
+  handleYoutubeUrl = e => this.handleURLError(e);
+  handleInstagramUrl = e => this.handleURLError(e);
+  handleLinkedinUrl = e => this.handleURLError(e);
 
   onChange = e => {
     this.setState({
-      [e.target.name]: [e.target.value]
+      [e.target.name]: e.target.value
     });
   };
 
@@ -263,10 +267,10 @@ export default class ProfilePost extends Component {
                     borderColor: this.state.error['twitter'] ? 'red' : ''
                   }}
                 />
-                <small className='text-danger mb-4'>
-                  <p>{this.state.error['twitter'] ? 'Invalid URL' : ''}</p>
-                </small>
               </div>
+              <small className='text-danger mb-4'>
+                {this.state.error['twitter'] ? 'Invalid URL' : ''}
+              </small>
               <div className='d-flex my-4'>
                 <i className='fab fa-facebook fa-2x mr-2'></i>{' '}
                 <Input
@@ -274,15 +278,18 @@ export default class ProfilePost extends Component {
                   placeholder='Facebook URL'
                   name='facebook'
                   className='form-control'
-                  onChange={this.onChange}
+                  onChange={e => {
+                    this.onChange(e);
+                    this.handleFacebookUrl(e);
+                  }}
                   style={{
                     borderColor: this.state.error['facebook'] ? 'red' : ''
                   }}
                 />
-                <small className='text-danger mb-4'>
-                  <p>{this.state.error['facebook'] ? 'Invalid URL' : ''}</p>
-                </small>
               </div>
+              <small className='text-danger mb-4'>
+                {this.state.error['facebook'] ? 'Invalid URL' : ''}
+              </small>
               <div className='d-flex my-4'>
                 <i className='fab fa-instagram fa-2x mr-2'></i>{' '}
                 <Input
@@ -290,15 +297,18 @@ export default class ProfilePost extends Component {
                   placeholder='Instagram URL'
                   className='form-control'
                   name='instagram'
-                  onChange={this.onChange}
+                  onChange={e => {
+                    this.onChange(e);
+                    this.handleInstagramUrl(e);
+                  }}
                   style={{
                     borderColor: this.state.error['instagram'] ? 'red' : ''
                   }}
                 />
-                <small className='text-danger mb-4'>
-                  <p>{this.state.error['instagram'] ? 'Invalid URL' : ''}</p>
-                </small>
               </div>
+              <small className='text-danger mb-4'>
+                {this.state.error['instagram'] ? 'Invalid URL' : ''}
+              </small>
               <div className='d-flex my-4'>
                 <i className='fab fa-youtube fa-2x mr-2'></i>{' '}
                 <Input
@@ -306,15 +316,18 @@ export default class ProfilePost extends Component {
                   placeholder='Youtube URL'
                   className='form-control'
                   name='youtube'
-                  onChange={this.onChange}
+                  onChange={e => {
+                    this.onChange(e);
+                    this.handleYoutubeUrl(e);
+                  }}
                   style={{
                     borderColor: this.state.error['youtube'] ? 'red' : ''
                   }}
                 />
-                <small className='text-danger mb-4'>
-                  <p>{this.state.error['youtube'] ? 'Invalid URL' : ''}</p>
-                </small>
               </div>
+              <small className='text-danger mb-4'>
+                <p>{this.state.error['youtube'] ? 'Invalid URL' : ''}</p>
+              </small>
               <div className='d-flex my-4'>
                 <i className='fab fa-linkedin fa-2x mr-2'></i>{' '}
                 <Input
@@ -322,15 +335,18 @@ export default class ProfilePost extends Component {
                   placeholder='Linkedin URL'
                   className='form-control'
                   name='linkedin'
-                  onChange={this.onChange}
+                  onChange={e => {
+                    this.onChange(e);
+                    this.handleLinkedinUrl(e);
+                  }}
                   style={{
                     borderColor: this.state.error['linkedin'] ? 'red' : ''
                   }}
                 />
-                <small className='text-danger mb-4'>
-                  <p>{this.state.error['linkedin'] ? 'Invalid URL' : ''}</p>
-                </small>
               </div>
+              <small className='text-danger mb-4'>
+                <p>{this.state.error['linkedin'] ? 'Invalid URL' : ''}</p>
+              </small>
             </div>
 
             <div className='my-4'>
