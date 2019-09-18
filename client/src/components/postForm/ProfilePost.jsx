@@ -94,8 +94,69 @@ export default class ProfilePost extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('submit form ooo');
-    this.handleTwitterUrl();
+    const {
+      status,
+      company,
+      website,
+      location,
+      skills,
+      github,
+      bio,
+      facebook,
+      twitter,
+      youtube,
+      instagram,
+      linkedin,
+      error
+    } = this.state;
+
+    if (validateInputName(status)) {
+      // handle validity
+      this.setState({
+        error: {
+          status: true
+        }
+      });
+      return;
+    }
+    if (validateInputName(location)) {
+      // handle validity
+      this.setState({
+        error: {
+          location: true
+        }
+      });
+      return;
+    }
+    if (validateInputName(skills)) {
+      // handle validity
+      this.setState({
+        error: {
+          skills: true
+        }
+      });
+      return;
+    }
+    if (validateInputName(bio)) {
+      // handle validity
+      this.setState({
+        error: {
+          bio: true
+        }
+      });
+      return;
+    }
+
+    if (
+      error['twitter'] ||
+      error['facebook'] ||
+      error['youtube'] ||
+      error['youtube'] ||
+      error['instagram'] ||
+      error['linkedin']
+    ) {
+      return;
+    }
   };
 
   render() {
