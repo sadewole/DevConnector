@@ -27,7 +27,7 @@ export default (state = initState, action) => {
         case UPDATE_PROFILE:
             return {
                 ...state,
-                prof: [...state.prof, action.payload.data],
+                prof: action.payload.data,
                     msg: action.payload.msg
             };
         default:

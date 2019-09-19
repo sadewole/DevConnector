@@ -276,6 +276,7 @@ class ProfilePost extends Component {
                   this.onChange(e);
                   this.handleStatusError(e);
                 }}
+                value={this.state.status}
                 style={{ borderColor: this.state.error['status'] ? 'red' : '' }}
               >
                 {options}
