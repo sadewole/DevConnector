@@ -25,13 +25,18 @@ module.exports = {
     postUserPro: async (req, res, next) => {
         const pro = {
             user_id: req.user.id,
-            school: req.body.school,
-            study: req.body.study,
-            degree: req.body.degree,
-            startDate: req.body.startDate,
-            endDate: req.body.endDate,
-            currentDate: req.body.currentDate,
-            description: req.body.description
+            bio: req.body.bio,
+            status: req.body.status,
+            location: req.body.location,
+            skills: req.body.skills,
+            website: req.body.website,
+            company: req.body.company,
+            github: req.body.github,
+            facebook: req.body.facebook,
+            twitter: req.body.twitter,
+            instagram: req.body.instagram,
+            linkedin: req.body.linkedin,
+            youtube: req.body.youtube
         };
 
         try {
@@ -41,7 +46,7 @@ module.exports = {
                 type: 'POST',
                 status: 200,
                 data: newPro,
-                msg: 'Data added successfully'
+                msg: 'Profile saved successfully'
             });
         } catch (err) {
             res.status(400).json({
@@ -57,13 +62,18 @@ module.exports = {
 
         const pro = {
             user_id: req.user.id,
-            school: req.body.school,
-            study: req.body.study,
-            degree: req.body.degree,
-            startDate: req.body.startDate,
-            endDate: req.body.endDate,
-            currentDate: req.body.currentDate,
-            description: req.body.description
+            bio: req.body.bio,
+            status: req.body.status,
+            location: req.body.location,
+            skills: req.body.skills,
+            website: req.body.website,
+            company: req.body.company,
+            github: req.body.github,
+            facebook: req.body.facebook,
+            twitter: req.body.twitter,
+            instagram: req.body.instagram,
+            linkedin: req.body.linkedin,
+            youtube: req.body.youtube
         };
 
         try {

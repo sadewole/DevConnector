@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import Title from '../content/Title';
 import { Link } from 'react-router-dom';
-import { Form, Input, FormGroup } from 'reactstrap';
+import { Form, Input, FormGroup, Modal, ModalBody, Button } from 'reactstrap';
 import { validateInputName, validateLink } from '../auth/validator';
+import { postProfile } from '../../actions/profileAction';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class ProfilePost extends Component {
+class ProfilePost extends Component {
   state = {
     isOpen: true,
     status: '',
@@ -19,7 +22,8 @@ export default class ProfilePost extends Component {
     youtube: '',
     instagram: '',
     linkedin: '',
-    error: {}
+    error: {},
+    modal: false
   };
 
   static defaultProps = {
@@ -35,9 +39,22 @@ export default class ProfilePost extends Component {
     ]
   };
 
+  // Props
+  static propTypes = {
+    postProfile: PropTypes.func.isRequired,
+    prof: PropTypes.object.isRequired
+  };
+
   toggleBlock = () => {
     this.setState({
       isOpen: !this.state.isOpen
+    });
+  };
+
+  // toggle for modal
+  toggleModal = () => {
+    this.setState({
+      modal: !this.state.modal
     });
   };
 
@@ -59,20 +76,17 @@ export default class ProfilePost extends Component {
   };
 
   handleURLError = e => {
+    let fieldError = this.state.error;
     // handle URL Error
     if (!validateLink(e.target.value) && e.target.value.length > 0) {
-      this.setState({
-        error: {
-          [e.target.name]: true
-        }
-      });
+      fieldError[e.target.name] = true;
     } else {
-      this.setState({
-        error: {
-          [e.target.name]: false
-        }
-      });
+      fieldError[e.target.name] = false;
     }
+
+    this.setState({
+      error: fieldError
+    });
   };
 
   handleStatusError = e => this.handleAllError(e);
@@ -149,14 +163,31 @@ export default class ProfilePost extends Component {
 
     if (
       error['twitter'] ||
-      error['facebook'] ||
-      error['youtube'] ||
-      error['youtube'] ||
       error['instagram'] ||
-      error['linkedin']
+      error['linkedin'] ||
+      error['facebook'] ||
+      error['youtube']
     ) {
       return;
     }
+
+    const data = {
+      status,
+      company,
+      website,
+      location,
+      skills,
+      github,
+      bio,
+      facebook,
+      twitter,
+      youtube,
+      instagram,
+      linkedin
+    };
+    this.props.postProfile(data);
+
+    this.toggleModal();
   };
 
   render() {
@@ -170,6 +201,21 @@ export default class ProfilePost extends Component {
 
     return (
       <div className='container-fluid mt-5 p-5'>
+        {/* success modal */}
+        <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
+          <ModalBody>
+            <h3 className=''>{this.props.prof.msg}</h3>
+            <Button
+              color='danger'
+              className='float-right'
+              type='button'
+              onClick={this.toggleModal}
+            >
+              Close
+            </Button>
+          </ModalBody>
+        </Modal>
+        {/* modal end */}
         <Title
           title='create your profile'
           icon='fas fa-user-alt fa-2x'
@@ -411,7 +457,7 @@ export default class ProfilePost extends Component {
             </div>
 
             <div className='my-4'>
-              <button className='button btn-primary'>Submit</button>
+              <button className='button btn-primary'>Save</button>
               <Link to='/dashboard'>
                 <button className='button btn-default'>Go Back</button>
               </Link>
@@ -422,3 +468,14 @@ export default class ProfilePost extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    prof: state.profile
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { postProfile }
+)(ProfilePost);
