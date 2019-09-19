@@ -1,11 +1,11 @@
 import {
     GET_PROFILE,
-    ADD_PROFILE,
+    UPDATE_PROFILE,
     PROFILE_LOADING
 } from '../actions/types'
 
 const initState = {
-    prof: [],
+    prof: {},
     msg: '',
     isLoading: false
 }
@@ -24,7 +24,7 @@ export default (state = initState, action) => {
                     msg: action.payload.msg,
                     isLoading: false
             };
-        case ADD_PROFILE:
+        case UPDATE_PROFILE:
             return {
                 ...state,
                 prof: [...state.prof, action.payload.data],

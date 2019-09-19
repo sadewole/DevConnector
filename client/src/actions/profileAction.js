@@ -1,6 +1,6 @@
 import {
     GET_PROFILE,
-    ADD_PROFILE,
+    UPDATE_PROFILE,
     PROFILE_LOADING
 } from './types'
 import {
@@ -19,7 +19,7 @@ export const getSingleUserPro = (xd) => async (dispatch, getState) => {
             type: PROFILE_LOADING
         })
 
-        const res = await axios.get(`/api/v1/user/${xd}/pro`, tokenConfig(getState))
+        const res = await axios.get(`/api/v1/pro/${xd}/`, tokenConfig(getState))
         dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -30,16 +30,16 @@ export const getSingleUserPro = (xd) => async (dispatch, getState) => {
 }
 
 
-export const postProfile = (data) => async (dispatch, getState) => {
+export const updateProfile = (xd, data) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify(data)
-        const res = await axios.post('/api/v1/pro/', body, tokenConfig(getState))
+        const res = await axios.put(`/api/v1/pro/${xd}`, body, tokenConfig(getState))
         dispatch({
-            type: ADD_PROFILE,
+            type: UPDATE_PROFILE,
             payload: res.data
         })
 
     } catch (error) {
-        dispatch(returnError(error.response.status, error.response.data, 'ADD_PROFILE_FAIL'))
+        dispatch(returnError(error.response.status, error.response.data, 'UPDATE_PROFILE_FAIL'))
     }
 }

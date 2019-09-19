@@ -3,7 +3,8 @@ import Title from '../content/Title';
 import { Link } from 'react-router-dom';
 import { Form, Input, FormGroup, Modal, ModalBody, Button } from 'reactstrap';
 import { validateInputName, validateLink } from '../auth/validator';
-import { postProfile } from '../../actions/profileAction';
+import { getSingleUserPro, updateProfile } from '../../actions/profileAction';
+import { loadUser } from '../../actions/authAction';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -26,6 +27,41 @@ class ProfilePost extends Component {
     modal: false
   };
 
+  async componentDidMount() {
+    await this.props.loadUser();
+    if (this.props.user && this.props.user !== null) {
+      await this.props.getSingleUserPro(this.props.user.data._id);
+      const {
+        status,
+        company,
+        website,
+        location,
+        skills,
+        github,
+        bio,
+        facebook,
+        twitter,
+        youtube,
+        instagram,
+        linkedin
+      } = await this.props.profile.prof;
+      await this.setState({
+        status,
+        company,
+        website,
+        location,
+        skills,
+        github,
+        bio,
+        facebook,
+        twitter,
+        youtube,
+        instagram,
+        linkedin
+      });
+    }
+  }
+
   static defaultProps = {
     status: [
       '* Select Professional Status',
@@ -41,8 +77,10 @@ class ProfilePost extends Component {
 
   // Props
   static propTypes = {
-    postProfile: PropTypes.func.isRequired,
-    prof: PropTypes.object.isRequired
+    updateProfile: PropTypes.func.isRequired,
+    profile: PropTypes.object.isRequired,
+    loadUser: PropTypes.func.isRequired,
+    getSingleUserPro: PropTypes.func.isRequired
   };
 
   toggleBlock = () => {
@@ -123,7 +161,7 @@ class ProfilePost extends Component {
       linkedin,
       error
     } = this.state;
-
+    /** Checking of validity of input and confirmation of error traces */
     if (validateInputName(status)) {
       // handle validity
       this.setState({
@@ -170,6 +208,7 @@ class ProfilePost extends Component {
     ) {
       return;
     }
+    // End
 
     const data = {
       status,
@@ -185,8 +224,11 @@ class ProfilePost extends Component {
       instagram,
       linkedin
     };
-    this.props.postProfile(data);
 
+    // The updateProfile takes the user id and data to update the user profile
+    let user_id = this.props.user.data._id;
+    this.props.updateProfile(user_id, data);
+    // A successful modal display after all action
     this.toggleModal();
   };
 
@@ -204,7 +246,7 @@ class ProfilePost extends Component {
         {/* success modal */}
         <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
           <ModalBody>
-            <h3 className=''>{this.props.prof.msg}</h3>
+            <h3 className=''>{this.props.profile.msg}</h3>
             <Button
               color='danger'
               className='float-right'
@@ -216,12 +258,14 @@ class ProfilePost extends Component {
           </ModalBody>
         </Modal>
         {/* modal end */}
+
         <Title
           title='create your profile'
           icon='fas fa-user-alt fa-2x'
           subtitle="Let's get some information to make your profile stand out"
         />
         <small className='muted'>*=required fields</small>
+
         <section>
           <Form onSubmit={this.handleSubmit}>
             <FormGroup className='mb-2'>
@@ -250,6 +294,7 @@ class ProfilePost extends Component {
                 type='text'
                 name='company'
                 placeholder='Company'
+                value={this.state.company}
                 onChange={this.onChange}
               />
               <small className='muted'>
@@ -261,6 +306,7 @@ class ProfilePost extends Component {
                 type='text'
                 placeholder='Website'
                 name='website'
+                value={this.state.website}
                 onChange={this.onChange}
               />
               <small className='muted'>
@@ -272,6 +318,7 @@ class ProfilePost extends Component {
                 type='text'
                 placeholder='* Location'
                 name='location'
+                value={this.state.location}
                 onChange={e => {
                   this.onChange(e);
                   this.handleLocationError(e);
@@ -296,6 +343,7 @@ class ProfilePost extends Component {
                 type='text'
                 placeholder='* Skills'
                 name='skills'
+                value={this.state.skills}
                 onChange={e => {
                   this.onChange(e);
                   this.handleSkillsError(e);
@@ -317,6 +365,7 @@ class ProfilePost extends Component {
                 placeholder='Github Username'
                 className='form-control'
                 name='github'
+                value={this.state.github}
                 onChange={this.onChange}
               />
               <small className='muted'>
@@ -333,6 +382,7 @@ class ProfilePost extends Component {
                 placeholder='* A short bio of yourself'
                 className='form-control'
                 name='bio'
+                value={this.state.bio}
                 onChange={e => {
                   this.onChange(e);
                   this.handleBioError(e);
@@ -366,6 +416,7 @@ class ProfilePost extends Component {
                   placeholder='Twitter'
                   name='twitter'
                   className='form-control'
+                  value={this.state.twitter}
                   onChange={e => {
                     this.onChange(e);
                     this.handleTwitterUrl(e);
@@ -385,6 +436,7 @@ class ProfilePost extends Component {
                   placeholder='Facebook URL'
                   name='facebook'
                   className='form-control'
+                  value={this.state.facebook}
                   onChange={e => {
                     this.onChange(e);
                     this.handleFacebookUrl(e);
@@ -404,6 +456,7 @@ class ProfilePost extends Component {
                   placeholder='Instagram URL'
                   className='form-control'
                   name='instagram'
+                  value={this.state.instagram}
                   onChange={e => {
                     this.onChange(e);
                     this.handleInstagramUrl(e);
@@ -423,6 +476,7 @@ class ProfilePost extends Component {
                   placeholder='Youtube URL'
                   className='form-control'
                   name='youtube'
+                  value={this.state.youtube}
                   onChange={e => {
                     this.onChange(e);
                     this.handleYoutubeUrl(e);
@@ -442,6 +496,7 @@ class ProfilePost extends Component {
                   placeholder='Linkedin URL'
                   className='form-control'
                   name='linkedin'
+                  value={this.state.linkedin}
                   onChange={e => {
                     this.onChange(e);
                     this.handleLinkedinUrl(e);
@@ -471,11 +526,12 @@ class ProfilePost extends Component {
 
 const mapStateToProps = state => {
   return {
-    prof: state.profile
+    profile: state.profile,
+    user: state.auth.user
   };
 };
 
 export default connect(
   mapStateToProps,
-  { postProfile }
+  { getSingleUserPro, updateProfile, loadUser }
 )(ProfilePost);
