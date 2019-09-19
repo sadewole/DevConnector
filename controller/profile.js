@@ -1,6 +1,31 @@
 const User = require('../model/user');
 
 module.exports = {
+    getAllUserProfiles: async (req, res, next) => {
+
+
+        try {
+            const getAllUser = await User.find({}).select('-password');
+
+            if (!getAllUser || getAllUser.length < 1)
+                return res.status(404).json({
+                    msg: 'Error, User record not found'
+                });
+            // await Pro.select('-password');
+            res.status(200).json({
+                type: 'GET',
+                status: 200,
+                count: getAllUser.length,
+                msg: 'List of posted profile details',
+                data: getAllUser
+            });
+        } catch (error) {
+            res.status(400).json({
+                msg: error
+            });
+        }
+    },
+
     updateUserPro: async (req, res, next) => {
         const {
             id

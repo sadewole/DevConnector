@@ -2,6 +2,9 @@ const router = require('express-promise-router')();
 const passport = require('passport');
 const profController = require('../../controller/profile');
 
+router.route('/pro/')
+    .get(profController.getAllUserProfiles)
+
 router
     .route('/pro/:id')
     .get(passport.authenticate('jwt', {

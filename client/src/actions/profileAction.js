@@ -1,5 +1,6 @@
 import {
     GET_PROFILE,
+    GET_PROFILES,
     UPDATE_PROFILE,
     PROFILE_LOADING
 } from './types'
@@ -12,6 +13,22 @@ import {
 } from './authAction'
 
 
+
+export const getAllUserPro = () => async dispatch => {
+    try {
+        dispatch({
+            type: PROFILE_LOADING
+        })
+
+        const res = await axios.get('/api/v1/pro/')
+        dispatch({
+            type: GET_PROFILES,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch(returnError(error.response.status, error.response.data, 'GET_PROFILES_FAIL'))
+    }
+}
 
 export const getSingleUserPro = (xd) => async (dispatch, getState) => {
     try {

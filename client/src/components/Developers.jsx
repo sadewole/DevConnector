@@ -11,8 +11,7 @@ export default class Developers extends Component {
           icon='fab fa-connectdevelop fa-2x'
           subtitle='Browse and connect with developers'
         />
-        {/* panel */}
-        <ContentPanel />
+        {/* all developers panel */}
         <ContentPanel />
       </div>
     );
