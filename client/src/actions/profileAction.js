@@ -2,7 +2,9 @@ import {
     GET_PROFILE,
     GET_PROFILES,
     UPDATE_PROFILE,
-    PROFILE_LOADING
+    PROFILE_LOADING,
+    GIT_USERNAME_REPO,
+    GIT_USERNAME
 } from './types'
 import {
     returnError
@@ -58,5 +60,30 @@ export const updateProfile = (xd, data) => async (dispatch, getState) => {
 
     } catch (error) {
         dispatch(returnError(error.response.status, error.response.data, 'UPDATE_PROFILE_FAIL'))
+    }
+}
+
+export const githubUsername = (username) => async (dispatch) => {
+
+    try {
+        const data = {
+            client_id: 'd6c602e79ad825c8ceb2',
+            client_secret: '7860eab72105c4e981dd9e142bae2885c86e03a2'
+        }
+        // const fetchName = axios.get(`https://api.github.com/users/${username}`, data)
+        // dispatch({
+        //     type: GIT_USERNAME,
+        //     payload: fetchName.data
+        // })
+        // sort: 'created: asc'
+        const repo = axios.get(`https://api.github.com/users/${username}/repos?per_page=5`, data)
+        dispatch({
+            type: GIT_USERNAME_REPO,
+            payload: repo.data
+        })
+
+
+    } catch (error) {
+        dispatch(returnError(error.response.status, error.response.data, 'GITHUB_USERNAME_FAIL'))
     }
 }

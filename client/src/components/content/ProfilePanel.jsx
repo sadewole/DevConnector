@@ -1,19 +1,48 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllUserPro } from '../../actions/profileAction';
+import { getSingleUserPro } from '../../actions/profileAction';
+import { getSingleUserExp } from '../../actions/experienceAction';
+import { getSingleUserEdu } from '../../actions/educationAction';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class ProfilePanel extends Component {
+  async componentDidMount() {
+    const id = this.props.match.params.id;
+    await this.props.getSingleUserPro(id);
+    await this.props.getSingleUserExp(id);
+    await this.props.getSingleUserEdu(id);
+  }
+
   static propTypes = {
-    getAllUserPro: PropTypes.func.isRequired,
-    allProfile: PropTypes.array.isRequired
+    getSingleUserPro: PropTypes.func.isRequired,
+    getSingleUserExp: PropTypes.func.isRequired,
+    profile: PropTypes.object.isRequired,
+    exper: PropTypes.object.isRequired,
+    educ: PropTypes.object.isRequired,
+    getSingleUserEdu: PropTypes.func.isRequired
   };
 
   render() {
+    const {
+      name,
+      skills,
+      company,
+      bio,
+      email,
+      facebook,
+      instagram,
+      github,
+      linkedin,
+      location,
+      status,
+      twitter,
+      website,
+      youtube
+    } = this.props.profile;
     return (
       <div className='container-fluid mt-5 p-5'>
-        <Link to='/'>
+        <Link to='/developer'>
           <button className='button btn-default'>Back to profiles</button>
         </Link>
 
@@ -26,103 +55,144 @@ class ProfilePanel extends Component {
               alt='display-img'
             />
 
-            <h1 className=''>John Doe</h1>
-            <p className='lead'>Developer at Microsoft</p>
-            <p>Seattle, WA</p>
+            <h1 className=''>{name}</h1>
+            <p className='lead'>{company ? `Developer at ${company}` : null}</p>
+            <p>{location ? location : null}</p>
 
             <div className='icons my-1 '>
-              <Link to='#'>
-                <i className='fas fa-globe fa-2x'></i>
-              </Link>
-              <Link to='#'>
-                <i className='fab fa-twitter fa-2x'></i>
-              </Link>
-              <Link to='#'>
-                <i className='fab fa-facebook fa-2x'></i>
-              </Link>
-              <Link to='#'>
-                <i className='fab fa-linkedin fa-2x'></i>
-              </Link>
-              <Link to='#'>
-                <i className='fab fa-instagram fa-2x'></i>
-              </Link>
+              {website ? (
+                <a href={website} rel='noopener noreferrer' target='_blank'>
+                  <i className='fas fa-globe fa-2x'></i>
+                </a>
+              ) : null}
+
+              {twitter ? (
+                <a href={twitter} rel='noopener noreferrer' target='_blank'>
+                  <i className='fab fa-twitter fa-2x'></i>
+                </a>
+              ) : null}
+
+              {facebook ? (
+                <a href={facebook} rel='noopener noreferrer' target='_blank'>
+                  <i className='fab fa-facebook fa-2x'></i>
+                </a>
+              ) : null}
+
+              {linkedin ? (
+                <a href={linkedin} rel='noopener noreferrer' target='_blank'>
+                  <i className='fab fa-linkedin fa-2x'></i>
+                </a>
+              ) : null}
+
+              {instagram ? (
+                <a href={instagram} rel='noopener noreferrer' target='_blank'>
+                  <i className='fab fa-instagram fa-2x'></i>
+                </a>
+              ) : null}
+
+              {youtube ? (
+                <a href={youtube} rel='noopener noreferrer' target='_blank'>
+                  <i className='fab fa-youtube fa-2x'></i>
+                </a>
+              ) : null}
             </div>
           </div>
           {/* top ending */}
           {/* About layer */}
           <div className='profile-about bg-lights my-4 p-5 text-center'>
-            <h2 className='text-primary'>John's Bio</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error
-              vero ipsum tenetur nam repellendus asperiores obcaecati, doloribus
-              odio explicabo! Numquam?
-            </p>
-            <div className='line'></div>
-            <h2 className='text-primary'>Skill Set</h2>
-            <div className='skills d-md-flex d-sm-block'>
-              <div className='p-2'>
-                <i className='fas fa-check'></i>HTML
+            {bio ? (
+              <div>
+                <h2 className='text-primary'>Bio</h2>
+                <p>{bio}</p>
+                <div className='line'></div>
               </div>
-              <div className='p-2'>
-                <i className='fas fa-check'></i>CSS
+            ) : null}
+
+            {skills ? (
+              <div>
+                <h2 className='text-primary'>Skill Set</h2>
+                <div className='skills d-md-flex d-sm-block'>
+                  {skills.split(',').map((i, k) => {
+                    return (
+                      <div key={k}>
+                        <div className='p-2'>
+                          <i className='fas fa-check'></i>
+                          {i}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div className='p-2'>
-                <i className='fas fa-check'></i>JavaScript
-              </div>
-              <div className='p-2'>
-                <i className='fas fa-check'></i>Python
-              </div>
-            </div>
+            ) : null}
           </div>
           {/* third layer */}
           <div className='d-md-flex d-sm-block'>
             {/* Experience Layer */}
-            <div className='profile-exp bg-white p-3 '>
-              <h2 className='text-primary'>Experience</h2>
-              <div>
-                <h3>Microsoft</h3>
-                <p>Oct 2011 - Current</p>
-                <p>
-                  <strong>Position: </strong>Senior Developer
-                </p>
-                <p>
-                  <strong>Description: </strong>Lorem ipsum, dolor sit amet
-                  consectetur adipisicing elit. Ex illo facere dolorum,
-                  quibusdam reiciendis distinctio!
-                </p>
+            {this.props.exper.exp.length !== 0 ? (
+              <div className='profile-exp bg-white p-3 '>
+                <h2 className='text-primary'>Experience</h2>
+                {this.props.exper.exp.map(i => {
+                  return (
+                    <div key={i._id}>
+                      <h3>{i.company}</h3>
+                      <p>
+                        {' '}
+                        {new Date(i.startDate)
+                          .toDateString()
+                          .slice(4, 15)} -{' '}
+                        {i.endDate
+                          ? new Date(i.endDate).toDateString().slice(4, 15)
+                          : i.currentDate}
+                      </p>
+                      <p>
+                        <strong>Position: </strong>
+                        {i.job}
+                      </p>
+                      <p>
+                        <strong>Description: </strong>
+                        {i.description}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
-              <div>
-                <h3>Sun Microsystems</h3>
-                <p>Oct 2004 - Nov 2010</p>
-                <p>
-                  <strong>Position: </strong>Systems Admin
-                </p>
-                <p>
-                  <strong>Description: </strong>Lorem ipsum, dolor sit amet
-                  consectetur adipisicing elit. Ex illo facere dolorum,
-                  quibusdam reiciendis distinctio!
-                </p>
-              </div>
-            </div>
+            ) : null}
+
             {/* Education layer */}
-            <div className='profile-edu bg-white p-3'>
-              <h2 className='text-primary'>Education</h2>
-              <div>
-                <h3>University Of Washington</h3>
-                <p>Sep 1993 - June 1999</p>
-                <p>
-                  <strong>Degree: </strong>Masters
-                </p>
-                <p>
-                  <strong>Field Of Study: </strong>Computer Science
-                </p>
-                <p>
-                  <strong>Description: </strong>Lorem ipsum, dolor sit amet
-                  consectetur adipisicing elit. Ex illo facere dolorum,
-                  quibusdam reiciendis distinctio!
-                </p>
+            {this.props.educ.edu.length !== 0 ? (
+              <div className='profile-edu bg-white p-3'>
+                <h2 className='text-primary'>Education</h2>
+                {this.props.educ.edu.map(i => {
+                  return (
+                    <div key={i._id}>
+                      <h3>{i.school}</h3>
+                      <p>
+                        {' '}
+                        {new Date(i.startDate)
+                          .toDateString()
+                          .slice(4, 15)} -{' '}
+                        {i.endDate
+                          ? new Date(i.endDate).toDateString().slice(4, 15)
+                          : i.currentDate}
+                      </p>
+                      <p>
+                        <strong>Degree: </strong>
+                        {i.degree}
+                      </p>
+                      <p>
+                        <strong>Field Of Study: </strong>
+                        {i.study}
+                      </p>
+                      <p>
+                        <strong>Description: </strong>
+                        {i.description}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
-            </div>
+            ) : null}
           </div>
           {/* GitHub Repos */}
           <div className='profile-github'>
@@ -199,11 +269,13 @@ class ProfilePanel extends Component {
 
 const mapStateToProps = state => {
   return {
-    allProfile: state.profile.allProf
+    profile: state.profile.prof,
+    exper: state.experience,
+    educ: state.education
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getAllUserPro }
+  { getSingleUserExp, getSingleUserPro, getSingleUserEdu }
 )(ProfilePanel);

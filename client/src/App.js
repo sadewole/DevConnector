@@ -49,7 +49,7 @@ class App extends Component {
             path='/addExperience'
             component={authGuard(ExperiencePost)}
           />
-          <Route exact path='/profile/:id' component={ProfilePanel} />
+          <Route exact path='/profile/:id' component={authGuard(ProfilePanel)} />
           <Route component={DefaultPage} />
         </Switch>
       </Router>
