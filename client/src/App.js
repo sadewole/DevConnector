@@ -14,6 +14,7 @@ import SignIn from './components/auth/SignIn';
 import ProfilePost from './components/postForm/ProfilePost';
 import EducationPost from './components/postForm/EducationPost';
 import ExperiencePost from './components/postForm/ExperiencePost';
+import ProfilePanel from './components/content/ProfilePanel';
 import DefaultPage from './components/DefaultPage';
 // import ProfilePost from './components/postForm/ProfilePost';
 import authGuard from './HOC/authGuard';
@@ -31,17 +32,26 @@ class App extends Component {
       <Router>
         <AppNavbar />
         <Switch>
-          <Route exact path='/' component={Home} />{' '}
-          <Route path='/dashboard' component={authGuard(Dashboard)} />{' '}
-          <Route path='/developers' component={Developers} />{' '}
-          <Route path='/posts' component={authGuard(Posts)} />{' '}
-          <Route path='/register' component={Register} />{' '}
-          <Route path='/signin' component={SignIn} />{' '}
-          <Route path='/addProfile' component={authGuard(ProfilePost)} />{' '}
-          <Route path='/addEducation' component={authGuard(EducationPost)} />{' '}
-          <Route path='/addExperience' component={authGuard(ExperiencePost)} />{' '}
-          <Route path='/:id' component={DefaultPage} />
-        </Switch>{' '}
+          <Route exact path='/' component={Home} />
+          <Route exact path='/dashboard' component={authGuard(Dashboard)} />
+          <Route exact path='/developers' component={Developers} />
+          <Route exact path='/posts' component={authGuard(Posts)} />
+          <Route exact path='/register' component={Register} />
+          <Route exact path='/signin' component={SignIn} />
+          <Route exact path='/addProfile' component={authGuard(ProfilePost)} />
+          <Route
+            exact
+            path='/addEducation'
+            component={authGuard(EducationPost)}
+          />
+          <Route
+            exact
+            path='/addExperience'
+            component={authGuard(ExperiencePost)}
+          />
+          <Route exact path='/profile/:id' component={ProfilePanel} />
+          <Route component={DefaultPage} />
+        </Switch>
       </Router>
     );
   }

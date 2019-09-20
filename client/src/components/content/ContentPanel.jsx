@@ -31,7 +31,7 @@ class ContentPanel extends Component {
             <h2>{item.name}</h2>
             <p>{item.company ? `Developer at ${item.company}` : null}</p>
             <p>{item.location ? item.location : null}</p>
-            <Link to='#'>
+            <Link to={`/profile/${item._id}`}>
               <button className='button btn-primary'>View Profile</button>
             </Link>
           </div>
