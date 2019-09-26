@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { getSingleUserPro } from '../../actions/profileAction';
+import { getSingleUserPro, githubUsername } from '../../actions/profileAction';
 import { getSingleUserExp } from '../../actions/experienceAction';
 import { getSingleUserEdu } from '../../actions/educationAction';
 import { connect } from 'react-redux';
@@ -12,12 +12,18 @@ class ProfilePanel extends Component {
     await this.props.getSingleUserPro(id);
     await this.props.getSingleUserExp(id);
     await this.props.getSingleUserEdu(id);
+    const { github } = this.props.profile;
+    if (github !== '' || github !== null) {
+      console.log(github);
+      await this.props.githubUsername(github);
+    }
   }
 
   static propTypes = {
     getSingleUserPro: PropTypes.func.isRequired,
     getSingleUserExp: PropTypes.func.isRequired,
     profile: PropTypes.object.isRequired,
+    repo: PropTypes.array,
     exper: PropTypes.object.isRequired,
     educ: PropTypes.object.isRequired,
     getSingleUserEdu: PropTypes.func.isRequired
@@ -32,7 +38,6 @@ class ProfilePanel extends Component {
       email,
       facebook,
       instagram,
-      github,
       linkedin,
       location,
       status,
@@ -195,72 +200,45 @@ class ProfilePanel extends Component {
             ) : null}
           </div>
           {/* GitHub Repos */}
-          <div className='profile-github'>
-            <h2 className='text-primary my-2'>
-              <i className='fab fa-github'></i> Github Repos
-            </h2>
-            <div className='repo bg-white my-2 p-2'>
-              <div>
-                <h4>
-                  <Link to='#' target='_blank'>
-                    Repo One
-                  </Link>
-                </h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
-                  dolore!
-                </p>
-              </div>
+          {this.props.repo.length > 0 ? (
+            <div className='profile-github'>
+              <h2 className='text-primary my-2'>
+                <i className='fab fa-github'></i> Github Repos
+              </h2>
+              {this.props.repo.map(i => {
+                return (
+                  <div key={i.id} className='repo bg-white my-2 p-2'>
+                    <div>
+                      <h4>
+                        <a
+                          href={i.html_url}
+                          rel='noopener noreferrer'
+                          target='_blank'
+                        >
+                          {i.name}
+                        </a>
+                      </h4>
+                      <p>{i.description ? i.description : null}</p>
+                    </div>
 
-              <div>
-                <ul>
-                  <li className='badge badge-primary'>Stars: 44</li>
-                  <li className='badge badge-dark'>Watchers: 20</li>
-                  <li className='badge badge-light'>Forks: 25</li>
-                </ul>
-              </div>
+                    <div>
+                      <ul>
+                        <li className='badge badge-primary'>
+                          Stars: {i.stargazers_count}
+                        </li>
+                        <li className='badge badge-dark'>
+                          Watchers: {i.watchers_url}
+                        </li>
+                        <li className='badge badge-light'>
+                          Forks: {i.forks_count}
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-
-            <div className='repo bg-white my-2 p-2'>
-              <div>
-                <h4>
-                  <Link to='#'>Repo Two</Link>
-                </h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
-                  dolore!
-                </p>
-              </div>
-
-              <div>
-                <ul>
-                  <li className='badge badge-primary'>Stars: 44</li>
-                  <li className='badge badge-dark'>Watchers: 20</li>
-                  <li className='badge badge-light'>Forks: 25</li>
-                </ul>
-              </div>
-            </div>
-
-            <div className='repo bg-white my-2 p-2'>
-              <div>
-                <h4>
-                  <Link to='#'>Repo One</Link>
-                </h4>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet,
-                  dolore!
-                </p>
-              </div>
-
-              <div>
-                <ul>
-                  <li className='badge badge-primary'>Stars: 44</li>
-                  <li className='badge badge-dark'>Watchers: 20</li>
-                  <li className='badge badge-light'>Forks: 25</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          ) : null}
         </section>
       </div>
     );
@@ -270,6 +248,7 @@ class ProfilePanel extends Component {
 const mapStateToProps = state => {
   return {
     profile: state.profile.prof,
+    repo: state.profile.repo,
     exper: state.experience,
     educ: state.education
   };
@@ -277,5 +256,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getSingleUserExp, getSingleUserPro, getSingleUserEdu }
+  { getSingleUserExp, getSingleUserPro, getSingleUserEdu, githubUsername }
 )(ProfilePanel);

@@ -68,7 +68,8 @@ export const githubUsername = (username) => async (dispatch) => {
     try {
         const data = {
             client_id: 'd6c602e79ad825c8ceb2',
-            client_secret: '7860eab72105c4e981dd9e142bae2885c86e03a2'
+            client_secret: '7860eab72105c4e981dd9e142bae2885c86e03a2',
+            "sort": 'updated'
         }
         // const fetchName = axios.get(`https://api.github.com/users/${username}`, data)
         // dispatch({
@@ -76,14 +77,14 @@ export const githubUsername = (username) => async (dispatch) => {
         //     payload: fetchName.data
         // })
         // sort: 'created: asc'
-        const repo = axios.get(`https://api.github.com/users/${username}/repos?per_page=5`, data)
+        const repo = await axios.get(`https://api.github.com/users/${username}/repos?per_page=5&sort=created&order=desc`, data)
         dispatch({
             type: GIT_USERNAME_REPO,
             payload: repo.data
         })
 
-
     } catch (error) {
+        console.log(error)
         dispatch(returnError(error.response.status, error.response.data, 'GITHUB_USERNAME_FAIL'))
     }
 }
