@@ -47,7 +47,7 @@ export const postEducation = (data) => async (dispatch, getState) => {
 
 export const deleteEducation = id => async (dispatch, getState) => {
     try {
-        const res = await axios.delete(`/api/v1/edu/${id}`, tokenConfig(getState))
+        await axios.delete(`/api/v1/edu/${id}`, tokenConfig(getState))
         dispatch({
             type: DELETE_EDUCATION,
             payload: id

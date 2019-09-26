@@ -15,7 +15,20 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    avatar_url: String,
+    status: String,
+    company: String,
+    website: String,
+    location: String,
+    skills: String,
+    github: String,
+    bio: String,
+    facebook: String,
+    twitter: String,
+    youtube: String,
+    instagram: String,
+    linkedin: String
 })
 
 module.exports = User = mongoose.model('user', userSchema)

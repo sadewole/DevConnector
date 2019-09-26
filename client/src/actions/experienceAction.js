@@ -13,7 +13,6 @@ import {
 } from './authAction'
 
 
-
 export const getSingleUserExp = (xd) => async (dispatch, getState) => {
     try {
         dispatch({
@@ -47,7 +46,7 @@ export const postExperience = (data) => async (dispatch, getState) => {
 
 export const deleteExperience = id => async (dispatch, getState) => {
     try {
-        const res = await axios.delete(`/api/v1/exp/${id}`, tokenConfig(getState))
+        await axios.delete(`/api/v1/exp/${id}`, tokenConfig(getState))
         dispatch({
             type: DELETE_EXPERIENCE,
             payload: id

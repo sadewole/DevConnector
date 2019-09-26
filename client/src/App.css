@@ -4,6 +4,22 @@
 }
 
 /* generic class */
+.bg-lights {
+  background: #e3e3e3 !important;
+}
+
+.badge {
+  display: block !important;
+  text-align: left !important;
+  margin-bottom: .5rem;
+}
+
+.line {
+  border-bottom: 1px solid #333;
+  margin: 1rem;
+  padding: 1rem 0;
+}
+
 .float-right {
   float: right
 }
@@ -70,6 +86,59 @@
   position: fixed !important;
   top: 0;
   left: 0;
+}
+
+.icons .fab,
+.icons .fas {
+  color: #fff
+}
+
+.icons .fab:hover,
+.icons .fas:hover {
+  color: #333
+}
+
+.profile-about {}
+
+
+.profile-exp,
+.profile-edu {
+  border: 1px solid #e3e3e3;
+  margin: .5rem;
+}
+
+.profile-exp div,
+.profile-edu div {
+  border-bottom: 1px dotted #ccc;
+  margin: .5rem 0;
+  padding: .5rem 0;
+}
+
+.profile-exp div:last-child,
+.profile-edu div:last-child {
+  border: none
+}
+
+.skills {
+  justify-content: center;
+  align-items: center
+}
+
+.repo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e3e3e3;
+  margin: .5rem;
+}
+
+.repo div:first-child {
+  flex-basis: 70%
+}
+
+.repo div:last-child {
+  /* flex-basis: 20%; */
+  justify-self: flex-end;
 }
 
 .home-content {

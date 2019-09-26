@@ -71,29 +71,17 @@ class ExperiencePost extends Component {
     }
   };
 
-  handleJobError = e => {
-    this.handleAllError(e);
-  };
+  handleJobError = e => this.handleAllError(e);
 
-  handleCompanyError = e => {
-    this.handleAllError(e);
-  };
+  handleCompanyError = e => this.handleAllError(e);
 
-  handleLocationError = e => {
-    this.handleAllError(e);
-  };
+  handleLocationError = e => this.handleAllError(e);
 
-  handleStartDateError = e => {
-    this.handleAllError(e);
-  };
+  handleStartDateError = e => this.handleAllError(e);
 
-  handleEndDateError = e => {
-    this.handleAllError(e);
-  };
+  handleEndDateError = e => this.handleAllError(e);
 
-  handleDescriptionError = e => {
-    this.handleAllError(e);
-  };
+  handleDescriptionError = e => this.handleAllError(e);
   // end
 
   // change state event handler
