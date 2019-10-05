@@ -1,7 +1,7 @@
 {
-  "name": "MERN_SHOPPING_LIST",
+  "name": "devconnector",
   "version": "1.0.0",
-  "description": "A shopping list with MERN stack",
+  "description": "a profile builder app",
   "main": "server.js",
   "author": "SaMaDoR",
   "license": "MIT",
