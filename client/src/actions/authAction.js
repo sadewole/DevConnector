@@ -68,6 +68,7 @@ export const register = (data) => async (dispatch) => {
         })
 
     } catch (error) {
+        console.log(error)
         dispatch(returnError(error.response.status, error.response.data, 'REGISTER_FAIL'))
         dispatch({
             type: AUTH_ERROR
