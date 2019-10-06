@@ -8,7 +8,8 @@ const db = require('./db')
 db()
 
 const app = express();
-
+// Set static folder
+app.use(express.static('client/build'))
 // middlewares
 app.use(cors())
 app.use(logger('dev'))
