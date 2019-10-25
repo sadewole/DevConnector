@@ -194,16 +194,15 @@ module.exports = {
                 })
             }
             // pull out the comment index
-            const removeIndex = await post.comments.map(comment => comment.id.toString().indexOf(req.params.commentId))
-            await post.comments.splice(removeIndex, 1)
+            const removeIndex = post.comments.map(comment => comment.id.toString().indexOf(req.params.commentId))
+            post.comments.splice(removeIndex, 1)
 
             await post.save()
 
             res.status(200).json({
                 msg: 'Comment deleted successfully',
-                type: 'PUT',
-                status: 200,
-                data
+                type: 'Delete',
+                status: 200
             })
 
         } catch (error) {
