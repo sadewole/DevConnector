@@ -2,28 +2,41 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const postFeedSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "users"
+    },
+    text: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
     },
-    user_id: {
-        type: String,
-        required: true
-    },
-    liked: {
-        type: Number,
-        default: 0
-    },
-    disliked: {
-        type: Number,
-        default: 0
-    },
-    created_at: {
+    likes: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "users"
+        }
+    }],
+    comments: [{
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: "users"
+        },
+        text: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+    date: {
         type: Date,
         default: Date.now
-    },
-    user: {
-
     }
 })
 

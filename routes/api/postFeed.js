@@ -11,12 +11,26 @@ router.route('/post/')
     }), postFeedController.postNewFeed)
 
 router.route('/post/:id')
-    .put(postFeedController.updatePostStatus)
-    .delete(postFeedController.deletePost)
+    .get(passport.authenticate('jwt', {
+        session: false
+    }), postFeedController.getSinglePost)
+    .delete(passport.authenticate('jwt', {
+        session: false
+    }), postFeedController.deletePost)
 
-router.route('/post/:id/like')
-    .post(postFeedController.likePost)
+router.route('/post/like/:id')
+    .put(passport.authenticate('jwt', {
+        session: false
+    }), postFeedController.likePost)
 
-router.route('/post/:id/dislike')
-    .post(postFeedController.dislikePost)
+router.route('/post/comment/:id')
+    .put(passport.authenticate('jwt', {
+        session: false
+    }), postFeedController.commentPost)
+
+router.route('/post/comment/:id/:commentId')
+    .delete(passport.authenticate('jwt', {
+        session: false
+    }), postFeedController.deleteComment)
+
 module.exports = router
