@@ -86,6 +86,7 @@
   position: fixed !important;
   top: 0;
   left: 0;
+  z-index: 100;
 }
 
 .icons .fab,
@@ -189,6 +190,17 @@
 .btn-default:hover {
   background: #7e7b7b;
   color: #fff;
+}
+
+.post-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.post-content {
+  display: grid;
+  align-items: center;
 }
 
 .panel-img {

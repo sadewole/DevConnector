@@ -59,9 +59,7 @@ class EducationPost extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-  };
 
-  handleAllError = e => {
     // Handle input error
     if (e.target.value.length > 0) {
       this.setState({
@@ -76,30 +74,6 @@ class EducationPost extends Component {
         }
       });
     }
-  };
-
-  handleSchoolError = e => {
-    this.handleAllError(e);
-  };
-
-  handleDegreeError = e => {
-    this.handleAllError(e);
-  };
-
-  handleStudyError = e => {
-    this.handleAllError(e);
-  };
-
-  handleStartDateError = e => {
-    this.handleAllError(e);
-  };
-
-  handleEndDateError = e => {
-    this.handleAllError(e);
-  };
-
-  handleDescriptionError = e => {
-    this.handleAllError(e);
   };
 
   // handle form submission
@@ -226,10 +200,7 @@ class EducationPost extends Component {
               className='mb-2'
               placeholder='* School or Bootcamp'
               name='school'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleSchoolError(e);
-              }}
+              onChange={this.handleChange}
               style={{ borderColor: this.state.error['school'] ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
@@ -242,10 +213,7 @@ class EducationPost extends Component {
               placeholder='* Degree or Certificate'
               className='mb-2'
               name='degree'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleDegreeError(e);
-              }}
+              onChange={this.handleChange}
               style={{ borderColor: this.state.error['degree'] ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
@@ -258,10 +226,7 @@ class EducationPost extends Component {
               name='study'
               className='mb-2'
               placeholder='* Field Of Study'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleStudyError(e);
-              }}
+              onChange={this.handleChange}
               style={{ borderColor: this.state.error['study'] ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
@@ -275,10 +240,7 @@ class EducationPost extends Component {
                 type='date'
                 name='startDate'
                 className='mb-2'
-                onChange={e => {
-                  this.handleChange(e);
-                  this.handleStartDateError(e);
-                }}
+                onChange={this.handleChange}
                 style={{
                   borderColor: this.state.error['startDate'] ? 'red' : ''
                 }}
@@ -297,10 +259,7 @@ class EducationPost extends Component {
                 type='date'
                 name='endDate'
                 className='mb-2'
-                onChange={e => {
-                  this.handleChange(e);
-                  this.handleEndDateError(e);
-                }}
+                onChange={this.handleChange}
                 style={{
                   borderColor: this.state.error['endDate'] ? 'red' : ''
                 }}
@@ -333,10 +292,7 @@ class EducationPost extends Component {
               className='my-4'
               placeholder='* Program Description'
               name='description'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleDescriptionError(e);
-              }}
+              onChange={this.handleChange}
               style={{
                 borderColor: this.state.error['description'] ? 'red' : ''
               }}

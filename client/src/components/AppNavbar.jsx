@@ -52,7 +52,7 @@ class AppNavbar extends Component {
           <NavLink href='/developers'>Developers</NavLink>
         </NavItem>
         <NavItem>
-          <NavLink href='#'>Post</NavLink>
+          <NavLink href='/posts'>Post</NavLink>
         </NavItem>
         <NavItem>
           <NavLink href='/dashboard'>Dashboard</NavLink>

@@ -35,12 +35,10 @@ class ProfilePanel extends Component {
       skills,
       company,
       bio,
-      email,
       facebook,
       instagram,
       linkedin,
       location,
-      status,
       twitter,
       website,
       youtube

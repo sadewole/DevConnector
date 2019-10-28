@@ -4,7 +4,6 @@ import {
     UPDATE_PROFILE,
     PROFILE_LOADING,
     GIT_USERNAME_REPO,
-    GIT_USERNAME
 } from './types'
 import {
     returnError

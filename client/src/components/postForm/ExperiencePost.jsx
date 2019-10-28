@@ -53,8 +53,12 @@ class ExperiencePost extends Component {
     });
   };
 
-  // handle input error controller
-  handleAllError = e => {
+  // change state event handler
+  handleChange = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+
     // Handle input error
     if (e.target.value.length > 0) {
       this.setState({
@@ -69,26 +73,6 @@ class ExperiencePost extends Component {
         }
       });
     }
-  };
-
-  handleJobError = e => this.handleAllError(e);
-
-  handleCompanyError = e => this.handleAllError(e);
-
-  handleLocationError = e => this.handleAllError(e);
-
-  handleStartDateError = e => this.handleAllError(e);
-
-  handleEndDateError = e => this.handleAllError(e);
-
-  handleDescriptionError = e => this.handleAllError(e);
-  // end
-
-  // change state event handler
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
   };
 
   // handle form submission
@@ -221,10 +205,7 @@ class ExperiencePost extends Component {
               placeholder='* Job Title'
               name='job'
               className='mb-2'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleJobError(e);
-              }}
+              onChange={this.handleChange}
               style={{ borderColor: this.state.error['job'] ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
@@ -235,10 +216,7 @@ class ExperiencePost extends Component {
               placeholder='* Company'
               name='company'
               className='mb-2'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleCompanyError(e);
-              }}
+              onChange={this.handleChange}
               style={{ borderColor: this.state.error['company'] ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
@@ -251,10 +229,7 @@ class ExperiencePost extends Component {
               placeholder='Location'
               name='location'
               className='mb-2'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleLocationError(e);
-              }}
+              onChange={this.handleChange}
               style={{ borderColor: this.state.error['location'] ? 'red' : '' }}
             />
             <small className='text-danger mb-4'>
@@ -268,10 +243,7 @@ class ExperiencePost extends Component {
                 type='date'
                 className='mb-2'
                 name='startDate'
-                onChange={e => {
-                  this.handleChange(e);
-                  this.handleStartDateError(e);
-                }}
+                onChange={this.handleChange}
                 style={{
                   borderColor: this.state.error['startDate'] ? 'red' : ''
                 }}
@@ -290,10 +262,7 @@ class ExperiencePost extends Component {
                 type='date'
                 className='mb-4'
                 name='endDate'
-                onChange={e => {
-                  this.handleChange(e);
-                  this.handleEndDateError(e);
-                }}
+                onChange={this.handleChange}
                 style={{
                   borderColor: this.state.error['endDate'] ? 'red' : ''
                 }}
@@ -329,10 +298,7 @@ class ExperiencePost extends Component {
               className='my-4'
               placeholder='Job Description'
               name='description'
-              onChange={e => {
-                this.handleChange(e);
-                this.handleDescriptionError(e);
-              }}
+              onChange={this.handleChange}
               style={{
                 borderColor: this.state.error['description'] ? 'red' : ''
               }}
