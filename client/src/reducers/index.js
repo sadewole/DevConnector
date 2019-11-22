@@ -7,6 +7,7 @@ import errorReducer from './errorReducer'
 import educationReducer from './educationReducer'
 import experienceReducer from './experienceReducer'
 import profileReducer from './profileReducer'
+import postFeedReducer from './postFeedReducer'
 
 export default combineReducers({
     auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     dash: dashboardReducer,
     education: educationReducer,
     experience: experienceReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    postFeed: postFeedReducer
 })

@@ -5,9 +5,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class ContentPanel extends Component {
-  state = {
-    arrStack: ['HTML', 'CSS', 'Python', 'JavaScript']
-  };
+  // state = {
+  //   arrStack: ['HTML', 'CSS', 'Python', 'JavaScript']
+  // };
 
   componentDidMount() {
     this.props.getAllUserPro();
@@ -63,7 +63,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { getAllUserPro }
-)(ContentPanel);
+export default connect(mapStateToProps, { getAllUserPro })(ContentPanel);

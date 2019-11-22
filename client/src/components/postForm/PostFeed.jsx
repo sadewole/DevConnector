@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
 import { Form, Input } from 'reactstrap';
 import { validateInputName } from '../auth/validator';
+import { connect } from 'react-redux';
+import { postFeed } from '../../actions/postFeedAction';
+import PropTypes from 'prop-types';
 
-export default class PostFeed extends Component {
+class PostFeed extends Component {
   state = {
     post: '',
     error: {}
+  };
+
+  // Props
+  static propType = {
+    postFeed: PropTypes.func.isReqiuired
   };
 
   handleChange = e => {
@@ -42,6 +50,8 @@ export default class PostFeed extends Component {
       });
       return;
     }
+
+    this.props.postFeed({ text: post });
   };
 
   render() {
@@ -67,3 +77,5 @@ export default class PostFeed extends Component {
     );
   }
 }
+
+export default connect(null, { postFeed })(PostFeed);

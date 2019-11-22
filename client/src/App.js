@@ -9,6 +9,7 @@ import Home from './components/Home';
 import Developers from './components/Developers';
 import Dashboard from './components/Dashboard';
 import Posts from './components/Posts';
+import Discussion from './components/Discussion';
 import Register from './components/auth/Register';
 import SignIn from './components/auth/SignIn';
 import ProfilePost from './components/postForm/ProfilePost';
@@ -35,7 +36,7 @@ class App extends Component {
           <Route exact path='/' component={Home} />{' '}
           <Route exact path='/dashboard' component={authGuard(Dashboard)} />{' '}
           <Route exact path='/developers' component={Developers} />{' '}
-          <Route exact path='/posts' component={authGuard(Posts)} />{' '}
+          <Route exact path='/posts' component={authGuard(Posts)} />
           <Route exact path='/register' component={Register} />{' '}
           <Route exact path='/signin' component={SignIn} />{' '}
           <Route exact path='/addProfile' component={authGuard(ProfilePost)} />{' '}
@@ -54,6 +55,7 @@ class App extends Component {
             path='/profile/:id'
             component={authGuard(ProfilePanel)}
           />{' '}
+          <Route exact path='/post/:id' component={authGuard(Discussion)} />
           <Route component={DefaultPage} />{' '}
         </Switch>{' '}
       </Router>

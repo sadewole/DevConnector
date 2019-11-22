@@ -15,7 +15,6 @@ export default class Posts extends Component {
         <p className='bg-primary text-white p-2 lead'>say something...</p>
         <PostFeed /> <br />
         <PostFeedPanel />
-        <PostFeedPanel />
       </div>
     );
   }

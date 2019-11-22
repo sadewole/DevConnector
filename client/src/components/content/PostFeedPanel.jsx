@@ -1,39 +1,82 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { getPostFeed, likes } from '../../actions/postFeedAction';
+import { loadUser } from '../../actions/authAction';
+import { connect } from 'react-redux';
 
-export default class PostFeedPanel extends Component {
+class PostFeedPanel extends Component {
+  state = {
+    userId: ''
+  };
+  async componentDidMount() {
+    await this.props.loadUser();
+    this.props.getPostFeed();
+    if (this.props.dash.userName.data !== undefined) {
+      this.setState({
+        userId: this.props.dash.userName.data._id
+      });
+    }
+  }
+
   static propTypes = {
-    prop: PropTypes
+    dash: PropTypes.object,
+    getPostFeed: PropTypes.func.isRequired,
+    likes: PropTypes.func.isRequired
+    // postFeed: PropTypes.array.isRequired
+  };
+
+  handleLikes = id => {
+    console.log(67);
+    this.props.likes(id);
   };
 
   render() {
-    return (
-      <div className='row mt-3 mb-3 border p-2'>
-        <div className='text-center col-md-2 col-xs-12 '>
-          <img
-            src='./image/blank-picture.png'
-            alt='imageGravatar'
-            className='img-fluid post-img'
-          />
-          <p className='text-primary lead'>John Doe</p>
-        </div>
-        <div className='col-md-10 col-xs-12 '>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit
-            debitis vero numquam excepturi iure pariatur assumenda illum
-            praesentium delectus officia? Molestiae possimus aperiam doloremque
-            ad exercitationem. Est maiores dolorum distinctio!
-          </p>
-          <button class='button'>
-            <i class='fas fa-heart text-danger'></i>
-            <span>4</span>
-          </button>
-          <Link to='/post' class='button btn-primary'>
-            Discussion
-          </Link>
-        </div>
-      </div>
-    );
+    return this.props.postFeed.data !== undefined
+      ? this.props.postFeed.data.map(post => {
+          return (
+            <div key={post._id} className='row mt-3 mb-3 border p-2'>
+              <div className='text-center col-md-2 col-xs-12 '>
+                <img
+                  src='/image/blank-picture.png'
+                  alt='imageGravatar'
+                  className='img-fluid post-img'
+                />
+                <p className='text-primary lead'>{post.name}</p>
+              </div>
+              <div className='col-md-10 col-xs-12 '>
+                <p>{post.text}</p>
+                <button className='button' onClick={this.handleLikes(post._id)}>
+                  <i
+                    className='fas fa-heart'
+                    style={{
+                      color: post.likes.find(
+                        like => like.id === this.state.userId
+                      )
+                        ? 'red'
+                        : 'white'
+                    }}
+                  ></i>
+                  <span>{post.likes.length}</span>
+                </button>
+                <Link to={`/post/${post._id}`} className='button btn-primary'>
+                  Discussion
+                </Link>
+              </div>
+            </div>
+          );
+        })
+      : null;
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    dash: state.dash,
+    postFeed: state.postFeed.allPost
+  };
+};
+
+export default connect(mapStateToProps, { getPostFeed, loadUser, likes })(
+  PostFeedPanel
+);

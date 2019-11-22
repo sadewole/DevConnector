@@ -28,3 +28,11 @@ export const PROFILE_LOADING = 'PROFILE_LOADING'
 // gitHub
 export const GIT_USERNAME_REPO = 'GIT_USERNAME_REPO'
 export const GIT_USERNAME = 'GIT_USERNAME'
+
+// Post
+export const ADD_POSTFEED = 'ADD_POSTFEED'
+export const GET_POSTFEED = 'GET_POSTFEED'
+export const GET_ALL_POSTFEED = 'GET_ALL_POSTFEED'
+export const DELETE_POSTFEED = 'DELETE_POSTFEED'
+export const POSTFEED_LOADING = 'POSTFEED_LOADING'
+export const LIKED = 'LIKED'
