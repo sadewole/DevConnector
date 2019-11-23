@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { getPostFeed, likes } from '../../actions/postFeedAction';
+import {
+  getPostFeed,
+  deletePostFeed,
+  likes
+} from '../../actions/postFeedAction';
 import { loadUser } from '../../actions/authAction';
 import { connect } from 'react-redux';
 
@@ -11,7 +15,7 @@ class PostFeedPanel extends Component {
   };
   async componentDidMount() {
     await this.props.loadUser();
-    this.props.getPostFeed();
+    await this.props.getPostFeed();
     if (this.props.dash.userName.data !== undefined) {
       this.setState({
         userId: this.props.dash.userName.data._id
@@ -19,21 +23,32 @@ class PostFeedPanel extends Component {
     }
   }
 
+  componentDidUpdate(prevProp, nextProp) {
+    const { msg } = this.props;
+    if (msg !== prevProp.msg) {
+      this.props.getPostFeed();
+    }
+  }
+
   static propTypes = {
     dash: PropTypes.object,
     getPostFeed: PropTypes.func.isRequired,
+    deletePostFeed: PropTypes.func.isRequired,
     likes: PropTypes.func.isRequired
     // postFeed: PropTypes.array.isRequired
   };
 
   handleLikes = id => {
-    console.log(67);
     this.props.likes(id);
   };
 
+  handleDelete = id => {
+    this.props.deletePostFeed(id);
+  };
+
   render() {
-    return this.props.postFeed.data !== undefined
-      ? this.props.postFeed.data.map(post => {
+    return this.props.postFeed !== undefined
+      ? this.props.postFeed.map(post => {
           return (
             <div key={post._id} className='row mt-3 mb-3 border p-2'>
               <div className='text-center col-md-2 col-xs-12 '>
@@ -46,12 +61,15 @@ class PostFeedPanel extends Component {
               </div>
               <div className='col-md-10 col-xs-12 '>
                 <p>{post.text}</p>
-                <button className='button' onClick={this.handleLikes(post._id)}>
+                <button
+                  className='button'
+                  onClick={() => this.handleLikes(post._id)}
+                >
                   <i
                     className='fas fa-heart'
                     style={{
                       color: post.likes.find(
-                        like => like.id === this.state.userId
+                        like => like.user === this.state.userId
                       )
                         ? 'red'
                         : 'white'
@@ -62,6 +80,14 @@ class PostFeedPanel extends Component {
                 <Link to={`/post/${post._id}`} className='button btn-primary'>
                   Discussion
                 </Link>
+                {post.user === this.state.userId ? (
+                  <button
+                    className='btn-danger btn'
+                    onClick={() => this.handleDelete(post._id)}
+                  >
+                    <i className='fas fa-trash-alt' />
+                  </button>
+                ) : null}
               </div>
             </div>
           );
@@ -73,10 +99,14 @@ class PostFeedPanel extends Component {
 const mapStateToProps = state => {
   return {
     dash: state.dash,
-    postFeed: state.postFeed.allPost
+    postFeed: state.postFeed.allPost,
+    msg: state.postFeed.msg
   };
 };
 
-export default connect(mapStateToProps, { getPostFeed, loadUser, likes })(
-  PostFeedPanel
-);
+export default connect(mapStateToProps, {
+  getPostFeed,
+  loadUser,
+  likes,
+  deletePostFeed
+})(PostFeedPanel);

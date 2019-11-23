@@ -4,7 +4,7 @@ const User = require('../model/user')
 module.exports = {
     getNewFeed: async (req, res, next) => {
         try {
-            const getPost = await PostFeed.find({})
+            const getPost = await PostFeed.find({}).sort('-date')
             if (!getPost || getPost.length < 1) {
                 res.status(404).json({
                     msg: 'There\'s no post available'

@@ -62,20 +62,22 @@ export const postFeed = (post) => async (dispatch, getState) => {
 
 export const deletePostFeed = (id) => async (dispatch, getState) => {
     try {
-        const res = await axios.post(`api/v1/post/${id}`, tokenConfig(getState))
+        await axios.delete(`api/v1/post/${id}`, tokenConfig(getState))
 
         dispatch({
             type: DELETE_POSTFEED,
-            payload: res.data
+            payload: id
         })
     } catch (err) {
-        dispatch(returnError(err.response.status, err.response.data, 'DELETE_POSTFEED_FAIL'))
+        console.log(err);
+
+        // dispatch(returnError(err.response.status, err.response.data, 'DELETE_POSTFEED_FAIL'))
     }
 }
 
 export const likes = (id) => async (dispatch, getState) => {
     try {
-        const res = await axios.put(`api/v1/post/like/${id}`, tokenConfig(getState))
+        const res = await axios.put(`api/v1/post/like/${id}`, {}, tokenConfig(getState))
 
         dispatch({
             type: LIKED,

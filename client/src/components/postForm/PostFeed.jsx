@@ -38,7 +38,7 @@ class PostFeed extends Component {
   };
 
   handleSubmit = e => {
-    e.preventDefault();
+    // e.preventDefault();
     let { post } = this.state;
 
     if (validateInputName(post)) {
@@ -64,7 +64,6 @@ class PostFeed extends Component {
             rows='4'
             placeholder='Create a post'
             name='post'
-            value={this.state.post}
             onChange={this.handleChange}
             style={{ borderColor: this.state.error['post'] ? 'red' : '' }}
           />

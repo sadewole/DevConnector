@@ -5,7 +5,7 @@ import {
     GET_ALL_POSTFEED,
     POSTFEED_LOADING,
     LIKED
-} from '../actions/types';  
+} from '../actions/types';
 
 const initState = {
     allPost: [],
@@ -24,7 +24,7 @@ export default (state = initState, action) => {
         case GET_ALL_POSTFEED:
             return {
                 ...state,
-                allPost: action.payload,
+                allPost: action.payload.data,
                     isLoading: false
             };
         case GET_POSTFEED:
@@ -36,7 +36,7 @@ export default (state = initState, action) => {
         case ADD_POSTFEED:
             return {
                 ...state,
-                allPost: [action.payload, ...state.allPost],
+                allPost: [action.payload.data, ...state.allPost],
                     msg: action.payload.msg
             };
         case DELETE_POSTFEED:
@@ -48,7 +48,7 @@ export default (state = initState, action) => {
         case LIKED:
             return {
                 ...state,
-                msg: action.payload
+                msg: action.payload.msg
             };
         default:
             return state
