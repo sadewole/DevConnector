@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import PostDiscussion from './postForm/PostDiscussion';
+import PostCommentPanel from './content/PostCommentPanel';
 import PostDiscussionPanel from './content/PostDiscussionPanel';
 
 function Discussion(props) {
@@ -10,15 +10,12 @@ function Discussion(props) {
       <Link to='/posts'>
         <button className='button btn-default'>Back To Posts</button>
       </Link>
-      <PostDiscussionPanel />
+      <PostDiscussionPanel id={props.match.params.id} />
       <p className='bg-primary text-white p-2 lead'>Leave a comment...</p>
       <PostDiscussion />
-      <PostDiscussionPanel />
-      <PostDiscussionPanel />
+      <PostCommentPanel id={props.match.params.id} />
     </div>
   );
 }
-
-Discussion.propTypes = {};
 
 export default Discussion;

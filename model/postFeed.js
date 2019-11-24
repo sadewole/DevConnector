@@ -25,6 +25,10 @@ const postFeedSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "users"
         },
+        name: {
+            type: String,
+            required: true
+        },
         text: {
             type: String,
             required: true

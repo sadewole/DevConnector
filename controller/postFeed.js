@@ -146,6 +146,7 @@ module.exports = {
                 msg: "Field must not be empty"
             })
         }
+
         try {
             const post = await PostFeed.findById(req.params.id)
             // check if post exist
@@ -157,6 +158,7 @@ module.exports = {
 
             const data = {
                 user: req.user.id,
+                name: req.user.name,
                 text: req.body.text
             }
 
