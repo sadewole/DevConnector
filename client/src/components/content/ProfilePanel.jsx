@@ -45,7 +45,7 @@ class ProfilePanel extends Component {
     } = this.props.profile;
     return (
       <div className='container-fluid mt-5 p-5'>
-        <Link to='/developer'>
+        <Link to='/developers'>
           <button className='button btn-default'>Back to profiles</button>
         </Link>
 

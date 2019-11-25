@@ -11,7 +11,7 @@
 .badge {
   display: block !important;
   text-align: left !important;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
 .line {
@@ -21,7 +21,7 @@
 }
 
 .float-right {
-  float: right
+  float: right;
 }
 
 .muted {
@@ -41,23 +41,23 @@
 }
 
 .fa-twitter {
-  color: #38a1f3
+  color: #38a1f3;
 }
 
 .fa-facebook {
-  color: #3b5998
+  color: #3b5998;
 }
 
 .fa-instagram {
-  color: #3f729b
+  color: #3f729b;
 }
 
 .fa-youtube {
-  color: #c4302b
+  color: #c4302b;
 }
 
 .fa-linkedin {
-  color: #0077b5
+  color: #0077b5;
 }
 
 /* end */
@@ -91,38 +91,38 @@
 
 .icons .fab,
 .icons .fas {
-  color: #fff
+  color: #fff;
 }
 
 .icons .fab:hover,
 .icons .fas:hover {
-  color: #333
+  color: #333;
 }
 
-.profile-about {}
-
+.profile-about {
+}
 
 .profile-exp,
 .profile-edu {
   border: 1px solid #e3e3e3;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 
 .profile-exp div,
 .profile-edu div {
   border-bottom: 1px dotted #ccc;
-  margin: .5rem 0;
-  padding: .5rem 0;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0;
 }
 
 .profile-exp div:last-child,
 .profile-edu div:last-child {
-  border: none
+  border: none;
 }
 
 .skills {
   justify-content: center;
-  align-items: center
+  align-items: center;
 }
 
 .repo {
@@ -130,11 +130,11 @@
   justify-content: space-between;
   align-items: center;
   border: 1px solid #e3e3e3;
-  margin: .5rem;
+  margin: 0.5rem;
 }
 
 .repo div:first-child {
-  flex-basis: 70%
+  flex-basis: 70%;
 }
 
 .repo div:last-child {
@@ -227,6 +227,28 @@
 
 .dash-buttons a:hover {
   text-decoration: none;
+}
+
+.not-found {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vh;
+  height: 100vh;
+  background: url('./img/page-not-found.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.not-found-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.not-found-text h1 {
+  color: crimson;
 }
 
 @media (max-width: 968px) {
