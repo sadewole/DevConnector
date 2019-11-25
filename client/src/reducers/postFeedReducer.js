@@ -15,7 +15,7 @@ const initState = {
     msg: '',
     allComment: [],
     isLoading: false
-}
+};
 
 export default (state = initState, action) => {
     switch (action.type) {
@@ -57,16 +57,18 @@ export default (state = initState, action) => {
         case COMMENT:
             return {
                 ...state,
-                allComment: [action.payload.data, ...state.allComment],
+                allComment: action.payload.data,
                     msg: action.payload.msg
             };
         case DELETE_COMMENT:
             return {
                 ...state,
-                allComment: state.allComment.filter(post => post._id !== action.payload),
+                allComment: state.allComment.filter(
+                        post => post._id !== action.payload
+                    ),
                     msg: action.payload.msg
             };
         default:
-            return state
+            return state;
     }
-}
+};

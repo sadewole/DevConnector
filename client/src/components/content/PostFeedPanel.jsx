@@ -24,6 +24,7 @@ class PostFeedPanel extends Component {
   }
 
   componentDidUpdate(prevProp, nextProp) {
+    // check if there's a change in props(msg)
     const { msg } = this.props;
     if (msg !== prevProp.msg) {
       this.props.getPostFeed();

@@ -169,7 +169,7 @@ module.exports = {
                 msg: 'Comment added',
                 type: 'PUT',
                 status: 200,
-                data
+                data: post.comments
             })
         } catch (error) {
             res.status(500).json({
