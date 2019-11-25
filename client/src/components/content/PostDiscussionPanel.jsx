@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getSinglePostFeed } from '../../actions/postFeedAction';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 
 class postDiscussionPanel extends Component {
   constructor(props) {
@@ -33,6 +34,9 @@ class postDiscussionPanel extends Component {
           </div>
           <div className='col-md-10 col-xs-12 '>
             <p>{post.text}</p>
+            <p>
+              Posted on: <Moment format='YYYY/MM/DD'>{post.date}</Moment>
+            </p>
           </div>
         </div>
       </div>

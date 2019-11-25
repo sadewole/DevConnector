@@ -8,6 +8,7 @@ import {
 } from '../../actions/postFeedAction';
 import { loadUser } from '../../actions/authAction';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 
 class PostFeedPanel extends Component {
   state = {
@@ -62,6 +63,9 @@ class PostFeedPanel extends Component {
               </div>
               <div className='col-md-10 col-xs-12 '>
                 <p>{post.text}</p>
+                <p>
+                  Posted on: <Moment format='YYYY/MM/DD'>{post.date}</Moment>
+                </p>
                 <button
                   className='button'
                   onClick={() => this.handleLikes(post._id)}

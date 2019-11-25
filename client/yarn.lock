@@ -1091,7 +1091,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.2", "@babel/runtime@^7.4.5":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.2":
   version "7.5.4"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.5.4.tgz?cache=0&sync_timestamp=1562698623405&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.5.4.tgz#cb7d1ad7c6d65676e66b47186577930465b5271b"
   integrity sha1-y30a18bWVnbma0cYZXeTBGW1Jxs=
@@ -8612,16 +8612,6 @@ react-transition-group@^2.3.1:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
     react-lifecycles-compat "^3.0.4"
-
-react-transition-group@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.npm.taobao.org/react-transition-group/download/react-transition-group-4.2.1.tgz#61fc9e36568bff9a1fe4e60fae323c8a6dbc0680"
-  integrity sha1-YfyeNlaL/5of5OYPrjI8im28BoA=
-  dependencies:
-    "@babel/runtime" "^7.4.5"
-    dom-helpers "^3.4.0"
-    loose-envify "^1.4.0"
-    prop-types "^15.6.2"
 
 react@^16.8.6:
   version "16.8.6"

@@ -99,8 +99,7 @@
   color: #333;
 }
 
-.profile-about {
-}
+.profile-about {}
 
 .profile-exp,
 .profile-edu {
@@ -249,6 +248,16 @@
 
 .not-found-text h1 {
   color: crimson;
+}
+
+.comment {
+  position: relative;
+}
+
+.comment-date {
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 @media (max-width: 968px) {

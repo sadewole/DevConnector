@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getSinglePostFeed, deleteComment } from '../../actions/postFeedAction';
 import { loadUser } from '../../actions/authAction';
 import { connect } from 'react-redux';
+import Moment from 'react-moment';
 
 class postCommentPanel extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class postCommentPanel extends Component {
       this.props.comments !== undefined
         ? this.props.comments.map(i => {
             return (
-              <div key={i._id} className='row mt-3 mb-3 border p-2'>
+              <div key={i._id} className='row mt-3 mb-3 border p-2 comment'>
                 <div className='text-center col-md-2 col-xs-12 '>
                   <img
                     src='/image/blank-picture.png'
@@ -43,14 +44,17 @@ class postCommentPanel extends Component {
                 <div className='col-md-10 col-xs-12 '>
                   <p>{i.text}</p>
                 </div>
-                {i.user === this.state.userId ? (
-                  <button
-                    className='btn-danger btn ml-auto'
-                    onClick={() => this.handleDelete(i._id)}
-                  >
-                    <i className='fas fa-trash-alt' />
-                  </button>
-                ) : null}
+                <div className='comment-date'>
+                  Posted on: <Moment format='YYYY/MM/DD'>{i.date}</Moment>
+                  {i.user === this.state.userId ? (
+                    <button
+                      className='btn-danger btn'
+                      onClick={() => this.handleDelete(i._id)}
+                    >
+                      <i className='fas fa-trash-alt' />
+                    </button>
+                  ) : null}
+                </div>
               </div>
             );
           })
