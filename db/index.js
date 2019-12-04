@@ -8,7 +8,7 @@ const mongoURI = process.env.mongoURI
 const connectDB = async () => {
     try {
         // connect to mongodb
-        await mongoose.connect(mongoURI, {
+        await mongoose.connect('mongodb+srv://devConnect:devcon12345@cluster0-seeyl.mongodb.net/test?retryWrites=true&w=majority', {
             useNewUrlParser: true,
             useFindAndModify: false,
             useCreateIndex: true,
