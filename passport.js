@@ -4,19 +4,17 @@ const LocalStrategy = require('passport-local').Strategy
 const {
     ExtractJwt
 } = require('passport-jwt')
-const {
-    JWTSecret
-} = require('./config')
 const User = require('./model/user')
 const {
     comparePassword
 } = require('./middlewares/helpers')
-
+const dotenv = require('dotenv')
+dotenv.config()
 
 // JSON web token strategy
 passport.use(new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-    secretOrKey: JWTSecret
+    secretOrKey: process.env.JWT_Secret
 }, async (payload, done) => {
     try {
         // find the user specified in token
