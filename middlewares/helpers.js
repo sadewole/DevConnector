@@ -1,9 +1,8 @@
 const joi = require('joi')
 const JWT = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
-const {
-    JWTSecret
-} = require('../config')
+const dotenv = require('dotenv')
+dotenv.config()
 
 module.exports = {
     /**
@@ -57,7 +56,7 @@ module.exports = {
             sub: user.id,
             iat: new Date().getTime(), // gen current date
             exp: new Date().setDate(new Date().getDate() + 1) // gen current date + 1 day
-        }, JWTSecret)
+        }, process.env.JWT_Secret)
 
         return token
     }
