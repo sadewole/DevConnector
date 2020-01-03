@@ -6,7 +6,6 @@ const {
     schemas
 } = require('../../middlewares/helpers')
 const passport = require('passport')
-const passportConfig = require('../../passport')
 
 // @route POST 
 // @access public
