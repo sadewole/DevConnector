@@ -12,7 +12,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 // JSON web token strategy
-passport.use(new JwtStrategy({
+passport.use('jwt', new JwtStrategy({
     jwtFromRequest: ExtractJwt.fromHeader('authorization'),
     secretOrKey: process.env.JWT_Secret
 }, async (payload, done) => {
@@ -32,7 +32,7 @@ passport.use(new JwtStrategy({
 
 
 // Local strategy
-passport.use(new LocalStrategy({
+passport.use('local', new LocalStrategy({
     usernameField: 'email'
 }, async (email, password, done) => {
     try {

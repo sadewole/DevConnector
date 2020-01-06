@@ -6,6 +6,7 @@ const {
     schemas
 } = require('../../middlewares/helpers')
 const passport = require('passport')
+require('../../passport') //bringing the passport file
 
 // @route POST 
 // @access public
@@ -18,9 +19,9 @@ router.route('/auth/signup')
 // @access public 
 // desc auth user
 router.route('/auth/signin')
-    .post(validateBody(schemas.signSchema), passport.authenticate('local', {
+    .post(passport.authenticate('local', {
         session: false
-    }), UserController.signin)
+    }), validateBody(schemas.signSchema), UserController.signin)
 
 // secret api for auth.
 router.route('/auth/secret')
